@@ -26,7 +26,10 @@ class Connector
     {
         $this->config = $conf;
         if ($conf instanceof Config)
+	{
             $this->output = $conf->getOutput();
+	    $this->url = $conf->getUrl();
+	}
         else
             $this->output = 'json';
         $this->debug = $debug;
@@ -92,6 +95,23 @@ class Connector
                 $name
             )
         );
+    }
+
+    public function __call($method, array $args)
+    {
+        $rename = explode('_', $method);
+	for ($i=1,$j=count($rename);$i<$j;++$i)
+	    $rename[$i] = ucfirst($rename[$i]);
+	$rename = implode('', $rename);
+	if (method_exists($this, $rename))
+	    return call_user_func_array(
+	        array(
+		    $this,
+		    $rename
+		),
+		$args
+	    );
+	throw new \BadMethodCallException('Method '.$method.' does not exist');
     }
 
     public function __set($name, $val)

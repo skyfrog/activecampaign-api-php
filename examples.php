@@ -1,8 +1,16 @@
 <?php
-
-	require_once("includes/ActiveCampaign.class.php");
-
-	$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
+use AC\ActiveCampaign;
+use AC\Arguments\Config;
+include 'src/AC/config.php';
+$conf = new Config(
+	array(
+		'url'	=> ACTIVECAMPAIGN_URL,
+		'apiKey'=> ACTIVECAMPAIGN_API_KEY,
+		'apiUser'=> 'yourUser',
+		'apiPAss'=> 'yourPass'
+	)
+);
+	$ac = new ActiveCampaign($conf, true);
 
 	/*
 	 * TEST API CREDENTIALS.
@@ -143,6 +151,18 @@
 	echo "<pre>";
 	print_r($campaign_report_totals);
 	echo "</pre>";
+
+function __autoload($class)
+{
+	$ns = explode('\\', $class);
+	if ($ns[0] == 'AC')
+	{
+		$class = array_pop($ns);
+		$path = 'src/'.implode('/', $ns).'/';
+		if (file_exists($path.$class.'.php'))
+			return include $path.$class.'.php';
+	}
+}
 
 ?>
 
