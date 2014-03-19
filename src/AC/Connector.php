@@ -35,7 +35,7 @@ class Connector
         do
         {
                 $r = $io->ask('Set ACTIVECAMPAIGN_* constants now? [y/N]', 'N');
-                switch (strtoupper($r)
+                switch (strtoupper($r))
                 {
                         case 'Y':
                                 $contents = '<?php%sdefine("ACTIVECAMPAIGN_URL", "%s");%sdefine("ACTIVECAMPAIGN_API_KEY", "%s");%s';
