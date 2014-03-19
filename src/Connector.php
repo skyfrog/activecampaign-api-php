@@ -29,6 +29,66 @@ class Connector
         $this->debug = $debug;
     }
 
+    public function __get($name)
+    {
+        $method = 'get'.ucfirst($name);
+        if (method_exists($this->config, $method))
+        {
+            return $this->config->{$mehtod}();
+        }
+        //final try
+        $method = 'get'.implode(
+            '',
+            array_map(
+                'ucfirst',
+                explode(
+                    '_',
+                    strtolower($name)
+                )
+            )
+        );
+        if (method_exists($this->config, $method))
+        {
+                return $this->config->{$method}();
+        }
+        throw new \RuntimeException(
+            sprintf(
+                'Property %s not found',
+                $name
+            )
+        );
+    }
+
+    public function __set($name, $val)
+    {
+        if (property_exists($this, $name))
+        {
+                return ($this->{$name} = $val);
+        }
+        $method = 'set'.implode(
+            '',
+            array_map(
+                'ucfirst',
+                explode(
+                    '_',
+                    strtolower($name)
+                )
+            )
+        );
+        if (method_exists($this->config, $method))
+        {
+                $this->config->{$method}($val);
+                return $val;
+        }
+        throw new \RuntimeException(
+                sprintf(
+                    'Property %s not found, config setter %s does not exist...',
+                    $name,
+                    $method
+                )
+        );
+    }
+
     public function enableDebug()
     {
         $this->debug = true;
