@@ -25,7 +25,10 @@ class Connector
     function __construct(Config $conf = null, $debug = false)
     {
         $this->config = $conf;
-        $this->output = $conf->getOutput();
+        if ($conf instanceof Config)
+            $this->output = $conf->getOutput();
+        else
+            $this->output = 'json';
         $this->debug = $debug;
     }
 
@@ -42,7 +45,7 @@ class Connector
                                 $url = $io->ask('Value for ACTIVECAMPAIGN_URL: ', '');
                                 $key = $io->ask('Value for ACTIVECAMPAIGN_API_KEY: ', '');
                                 file_put_contents(
-                                        './config.php',
+                                        dirname(__FILE__).'/config.php',
                                         sprintf(
                                                 $contents,
                                                 PHP_EOL,
