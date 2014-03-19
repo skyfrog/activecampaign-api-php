@@ -1,0 +1,8 @@
+{
+    "name": "EVODelavega/activecampaign-api-php",
+    "autoload": {
+        "psr-0" : {
+            "AC" : "src"
+        }
+    }
+}
