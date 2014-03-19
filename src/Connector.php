@@ -29,6 +29,38 @@ class Connector
         $this->debug = $debug;
     }
 
+    public static function postUpdate($event)
+    {
+        $io = $event->getIO();
+        do
+        {
+                $r = $io->ask('Set ACTIVECAMPAIGN_* constants now? [y/N]', 'N');
+                switch (strtoupper($r)
+                {
+                        case 'Y':
+                                $contents = '<?php%sdefine("ACTIVECAMPAIGN_URL", "%s");%sdefine("ACTIVECAMPAIGN_API_KEY", "%s");%s';
+                                $url = $io->ask('Value for ACTIVECAMPAIGN_URL: ', '');
+                                $key = $io->ask('Value for ACTIVECAMPAIGN_API_KEY: ', '');
+                                file_put_contents(
+                                        './config.php',
+                                        sprintf(
+                                                $contents,
+                                                PHP_EOL,
+                                                $url,
+                                                PHP_EOL,
+                                                $key,
+                                                PHP_EOL
+                                        )
+                                );
+                        case 'N':
+                                $r = null;
+                                break;
+                        default:
+                                $io->overwrite($r. ' is not a valid option, either enter y or n');
+                }
+        } while($r !== null);
+    }
+
     public function __get($name)
     {
         $method = 'get'.ucfirst($name);
