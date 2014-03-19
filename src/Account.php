@@ -4,15 +4,6 @@ namespace AC;
 class Account extends ActiveCampaign
 {
 
-    function __construct(Config $conf)
-    {
-        parent::__construct($conf);
-        $this->version = $version;
-        $this->url_base = $url_base;
-        $this->url = $url;
-        $this->api_key = $api_key;
-    }
-
     function add($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=account_add&api_output={$this->output}";
