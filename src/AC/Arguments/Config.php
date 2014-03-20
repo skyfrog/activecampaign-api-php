@@ -171,14 +171,8 @@ class Config
         return $this;
     }
 
-    public function getApiPass(Connector $conn = null)
+    public function getApiPass()
     {
-        if ($conn === null)
-        {//avoid getting pass in the wrong places
-            throw new \BadMethodCallException(
-                'Getting the pass requires passing of a valid connection'
-            );
-        }
         return $this->apiPass;
     }
 

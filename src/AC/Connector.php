@@ -72,7 +72,7 @@ class Connector
         $method = 'get'.ucfirst($name);
         if (method_exists($this->config, $method))
         {
-            return $this->config->{$mehtod}();
+            return $this->config->{$method}();
         }
         //final try
         $method = 'get'.implode(
