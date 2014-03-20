@@ -1,7 +1,8 @@
 <?php
 namespace AC;
 
-use AC\Arguments\Config;
+use AC\Arguments\Config,
+    AC\Arguments\Action;
 
 class ActiveCampaign extends Connector
 {
@@ -64,9 +65,9 @@ class ActiveCampaign extends Connector
         $add_tracking = false;
         switch ($component)
         {
-            case 'list':
-                $component = 'cList';
-                break;
+            //case 'list':
+                //$component = 'cList';
+                //break;
             case 'branding':
                 $component = 'design';
                 break;
@@ -81,6 +82,23 @@ class ActiveCampaign extends Connector
                 $add_tracking = true;
                 break;
         }
+
+        $action = new Action(
+            array(
+                'method' => $component.'_'.$method,
+                'output' => $this->output
+            ),
+            $this->config
+        );
+        if ($post_data)
+        {
+            $action->setData($post_data);
+        }
+        if ($params)
+        {
+            $action->setParams($params);
+        }
+        return $this->doAction($action);
 
         $class = ucwords($component); // IE: "contact" becomes "Contact"
         $class = __NAMESPACE__ .'\\' . $class;

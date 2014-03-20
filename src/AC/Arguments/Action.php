@@ -16,6 +16,7 @@ class Action
     protected $method = '';
     protected $output = 'json';
     protected $verb = self::ACTION_GET;
+    protected $params = null;
     protected $data = '';
 
     public function __construct(array $set = array(), Config $conf = null)
@@ -122,6 +123,45 @@ class Action
         return $this->verb;
     }
 
+    public function setParams($mixed)
+    {
+        if (is_array($mixed))
+        {
+            $str = '';
+            foreach ($mixed as $name => $val)
+            {
+                if (strstr($val, '=') === false)
+                {
+                    $str .= '&'.$name.'='.$val;
+                }
+                else
+                {
+                    $str .= $val{0} == '&' ? $val : ('&'.$val);
+                }
+            }
+            $mixed = $str;
+        }
+        if ($mixed{0} !== '&')
+        {
+            $mixed = '&'.$mixed;
+        }
+        $this->params = $mixed;
+        return $this;
+    }
+
+    public function getParams($asArray = false)
+    {
+        if (!$asArray)
+        {
+            return $this->params;
+        }
+        if (preg_match_all('/&([^=]+)=([^&]+)/',$this->params, $matches))
+        {
+            return array_combine($matches[1], $matches[2]);
+        }
+        return array();
+    }
+
     public function setOutput($out)
     {
         $this->output = $out;
@@ -167,10 +207,11 @@ class Action
     public function __toString()
     {
         return sprintf(
-            '&%s=%s&api_output=%s',
+            '&%s=%s&api_output=%s%s',
             $this->action,
             $this->method,
-            $this->output
+            $this->output,
+            $this->getParams()
         );
     }
 } 

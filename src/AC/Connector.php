@@ -26,10 +26,10 @@ class Connector
     {
         $this->config = $conf;
         if ($conf instanceof Config)
-	{
+        {
             $this->output = $conf->getOutput();
-	    $this->url = $conf->getUrl();
-	}
+            $this->url = $conf->getUrl();
+        }
         else
             $this->output = 'json';
         $this->debug = $debug;
@@ -40,30 +40,30 @@ class Connector
         $io = $event->getIO();
         do
         {
-                $r = $io->ask('Set ACTIVECAMPAIGN_* constants now? [y/N]', 'N');
-                switch (strtoupper($r))
-                {
-                        case 'Y':
-                                $contents = '<?php%sdefine("ACTIVECAMPAIGN_URL", "%s");%sdefine("ACTIVECAMPAIGN_API_KEY", "%s");%s';
-                                $url = $io->ask('Value for ACTIVECAMPAIGN_URL: ', '');
-                                $key = $io->ask('Value for ACTIVECAMPAIGN_API_KEY: ', '');
-                                file_put_contents(
-                                        dirname(__FILE__).'/config.php',
-                                        sprintf(
-                                                $contents,
-                                                PHP_EOL,
-                                                $url,
-                                                PHP_EOL,
-                                                $key,
-                                                PHP_EOL
-                                        )
-                                );
-                        case 'N':
-                                $r = null;
-                                break;
-                        default:
-                                $io->overwrite($r. ' is not a valid option, either enter y or n');
-                }
+            $r = $io->ask('Set ACTIVECAMPAIGN_* constants now? [y/N]', 'N');
+            switch (strtoupper($r))
+            {
+                case 'Y':
+                    $contents = '<?php%sdefine("ACTIVECAMPAIGN_URL", "%s");%sdefine("ACTIVECAMPAIGN_API_KEY", "%s");%s';
+                    $url = $io->ask('Value for ACTIVECAMPAIGN_URL: ', '');
+                    $key = $io->ask('Value for ACTIVECAMPAIGN_API_KEY: ', '');
+                    file_put_contents(
+                        dirname(__FILE__).'/config.php',
+                        sprintf(
+                            $contents,
+                            PHP_EOL,
+                            $url,
+                            PHP_EOL,
+                            $key,
+                            PHP_EOL
+                        )
+                    );
+                case 'N':
+                    $r = null;
+                    break;
+                default:
+                    $io->overwrite($r. ' is not a valid option, either enter y or n');
+            }
         } while($r !== null);
     }
 
@@ -100,25 +100,25 @@ class Connector
     public function __call($method, array $args)
     {
         $rename = explode('_', $method);
-	for ($i=1,$j=count($rename);$i<$j;++$i)
-	    $rename[$i] = ucfirst($rename[$i]);
-	$rename = implode('', $rename);
-	if (method_exists($this, $rename))
-	    return call_user_func_array(
-	        array(
-		    $this,
-		    $rename
-		),
-		$args
-	    );
-	throw new \BadMethodCallException('Method '.$method.' does not exist');
+        for ($i=1,$j=count($rename);$i<$j;++$i)
+            $rename[$i] = ucfirst($rename[$i]);
+        $rename = implode('', $rename);
+        if (method_exists($this, $rename))
+            return call_user_func_array(
+                array(
+                    $this,
+                    $rename
+                ),
+                $args
+            );
+        throw new \BadMethodCallException('Method '.$method.' does not exist');
     }
 
     public function __set($name, $val)
     {
         if (property_exists($this, $name))
         {
-                return ($this->{$name} = $val);
+            return ($this->{$name} = $val);
         }
         $method = 'set'.implode(
             '',
@@ -132,15 +132,15 @@ class Connector
         );
         if (method_exists($this->config, $method))
         {
-                $this->config->{$method}($val);
-                return $val;
+            $this->config->{$method}($val);
+            return $val;
         }
         throw new \RuntimeException(
-                sprintf(
-                    'Property %s not found, config setter %s does not exist...',
-                    $name,
-                    $method
-                )
+            sprintf(
+                'Property %s not found, config setter %s does not exist...',
+                $name,
+                $method
+            )
         );
     }
 
@@ -184,8 +184,11 @@ class Connector
             array(
                 'method'    => 'user_me',
                 'output'    => $this->output
-            )
+            ),
+            $this->config
         );
+        $this->doAction($action);
+        return true;
         $testUrl = $this->getUrl().'&api_action=user_me&api_output='.$this->output;
         $r = $this->curl($testUrl);
         if (is_object($r) && (int)$r->result_code)
@@ -253,7 +256,7 @@ class Connector
         $debug_str1[] = 'curl_setopt($ch, \CURLOPT_HEADER,0);';
         $debug_str1[] = 'curl_setopt($ch, \CURLOPT_RETURNTRANSFER,true);';
         $data = $todo->getData();
-        if ($todo->getVerb() === 'PUT' && $data)
+        if ($todo->getVerb() !== 'GET' && $data)
         {
             switch ($todo->getVerb())
             {
@@ -280,7 +283,7 @@ class Connector
             {
                 $this->dbg($todo->getData(true), 1, "pre", "Description: POST data");
             }
-            curl_setopt($request, CURLOPT_POSTFIELDS, $data);
+            curl_setopt($request, \CURLOPT_POSTFIELDS, $data);
             $debug_str1[] = 'curl_setopt($request, CURLOPT_POSTFIELDS, $data);';
         }
         curl_setopt($request, \CURLOPT_SSL_VERIFYPEER, false);
