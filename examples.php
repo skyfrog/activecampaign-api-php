@@ -4,14 +4,14 @@ use AC\Arguments\Config;
 include 'src/AC/config.php';
 $conf = new Config(
 	array(
-		'url'	=> ACTIVECAMPAIGN_URL,
-		'apiKey'=> ACTIVECAMPAIGN_API_KEY,
-		'apiUser'=> 'yourUser',
-		'apiPAss'=> 'yourPass'
+		'url'	=>  'yourURL',
+		'apiKey' => 'yourAPIKEY',
+		'apiUser'=> 'optionalUserName',
+		'apiPAss'=> 'andPassword'
 	)
 );
-	$ac = new ActiveCampaign($conf, true);
-
+	$ac = new ActiveCampaign($conf);
+	$out = array();
 	/*
 	 * TEST API CREDENTIALS.
 	 */
@@ -21,18 +21,20 @@ $conf = new Config(
 		exit();
 	}
 	else {
-		echo "<p>Credentials valid! Proceeding...</p>";
+		$out[] = 'Credentials valid! Proceeding...';
+		//echo "<p>Credentials valid! Proceeding...</p>";
 	}
 
 	/*
 	 * VIEW ACCOUNT DETAILS.
 	 */
 
-	$account = $ac->api("account/view");
-
+	$account = $ac->api("user/view?id=2");
+	$out[] = $account;
+	/*
 	echo "<pre>";
 	print_r($account);
-	echo "</pre>";
+	echo "</pre>";*/
 
 	/*
 	 * ADD NEW LIST.
@@ -52,7 +54,8 @@ $conf = new Config(
 	if ((int)$list_add->success) {
 		// successful request
 		$list_id = (int)$list_add->id;
-		echo "<p>List added successfully (ID {$list_id})!</p>";
+		$out[] = 'List added successfully (ID '.$list_id.')!';
+		//echo "<p>List added successfully (ID {$list_id})!</p>";
 	}
 	else {
 		// request failed
