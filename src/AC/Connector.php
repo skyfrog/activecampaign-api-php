@@ -322,8 +322,12 @@ class Connector
             throw new \RuntimeException(
                 sprintf(
                     'An unexpected problem occurred with the API request. Some causes include: invalid JSON or XML returned.
+                    URL request was sent to: %s
+                    DATA: %s
                     Here is the actual response from the server: ---- %s%s%s
                     JSON errors: %d - %s',
+                    $url,
+                    $data ? $todo->getData(true) : 'No data',
                     PHP_EOL.'<br>',
                     $response,
                     PHP_EOL.'<br>',

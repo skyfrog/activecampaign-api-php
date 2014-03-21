@@ -50,16 +50,16 @@ class Action
 
     public function getData($stringified = false)
     {
-        if ($stringified === false || $this->data = '')
+        if ($stringified === false || $this->data === '')
         {
             return $this->data;
         }
-        $data = '';
+        $data = array();
         foreach ($this->data as $key => $value)
         {
             if (!is_array($value))
             {
-                $data .= $key."=" . urlencode($value) . "&";
+                $data[] = $key .'='.urlencode($value);
             }
             else
             {
@@ -71,8 +71,8 @@ class Action
                         {
                             foreach ($value_ as $k => $v)
                             {
-                                $data .= sprintf(
-                                    '%s[%d][%s]=%s&',
+                                $data[] = sprintf(
+                                    '%s[%d][%s]=%s',
                                     $key_,
                                     $key,
                                     urlencode($k),
@@ -82,34 +82,25 @@ class Action
                         }
                         else
                         {
-                            $data .= $key_.'['.$key.']='.urlencode($value_).'&';
+                            $data[] = $key_.'['.$key.']='.urlencode($value_);
                         }
                     }
                 }
                 else
                 {
-                    // IE: [group] => array(2 => 2, 3 => 3)
-                    // normally we just want the key to be a string, IE: ["group[2]"] => 2
-                    // but we want to allow passing both formats
                     foreach ($value as $k => $v)
                     {
-                        if (!is_array($v))
-                        {
-                            $k = urlencode($k);
-                            $data .= sprintf(
-                                '%s[%d]=%s&',
-                                $key,
-                                urlencode($k),
-                                urlencode($v)
-                            );
-                        }
+                        $data[] = sprintf(
+                            '%s[%d]=%s',
+                            $key,
+                            $k,
+                            urlencode($v)
+                        );
                     }
                 }
-
             }
         }
-        //remove trailing &
-        return substr($data, 0, -1);
+        return implode('&', $data);
     }
 
     public function setVerb($action)
