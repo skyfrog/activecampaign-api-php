@@ -99,7 +99,6 @@ class ActiveCampaign extends Connector
             $action->setParams($params);
         }
         return $this->doAction($action);
-
         $class = ucwords($component); // IE: "contact" becomes "Contact"
         $class = __NAMESPACE__ .'\\' . $class;
 

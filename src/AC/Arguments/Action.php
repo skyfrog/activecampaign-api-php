@@ -164,11 +164,20 @@ class Action
         $this->method = str_replace(
             array(
                 '&',
-                '='
+                '=',
+                'contact'
             ),
-            '',
+            array(
+                '',
+                '',
+                'subscriber'
+            ),
             $method
         );
+        if ($this->method === 'contact')
+        {
+            $this->method = 'subscriber';
+        }
         return $this;
     }
 

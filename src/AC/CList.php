@@ -1,8 +1,70 @@
 <?php
 namespace AC;
+use AC\Arguments\Action,
+    AC\Arguments\Config;
 
 class CList extends ActiveCampaign
 {
+
+    private static $lists = null;
+
+    public function getListByName($name)
+    {
+        $lists = $this->getLists();
+        foreach ($lists as $list)
+        {
+            if ($list->name === $name)
+                return $list;
+        }
+        return null;
+    }
+
+    public function getListById(array $ids)
+    {
+        $lists = $this->getLists();
+        $return = array();
+        foreach ($lists as $list)
+        {
+            if (in_array($list->id, $ids))
+                $return[$list->id] = $list;
+        }
+        return $return;
+    }
+
+    protected function getLists()
+    {
+        if (self::$lists === null)
+        {
+            $action = new Action(
+                array(
+                    'method' => 'list_list',
+                    'output' => $this->output,
+                    'data'   => array('ids' => 'all')
+                )
+            );
+            $lists = $this->doAction($action, array('ids'=>'all'));
+            if ((int) $lists->result_code !== 1)
+            {
+                throw new \RuntimeException(
+                    sprintf(
+                        'Failed to get list overview: %s - %d (@%s)',
+                        $lists->result_message,
+                        (int)$lists->result_code,
+                        __METHOD__
+                    )
+                );
+            }
+            self::$lists = array();
+            foreach ($lists as $name => $val)
+            {
+                if ($val instanceof \stdClass)
+                {
+                    self::$lists[] = $val;
+                }
+            }
+        }
+        return self::$lists;
+    }
 
     function add($params, $post_data)
     {
