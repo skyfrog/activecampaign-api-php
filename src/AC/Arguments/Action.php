@@ -18,6 +18,7 @@ class Action
     protected $verb = self::ACTION_GET;
     protected $params = null;
     protected $data = '';
+    protected $stringBase = null;
 
     public function __construct(array $set = array(), Config $conf = null)
     {
@@ -206,11 +207,18 @@ class Action
 
     public function __toString()
     {
+        if ($this->stringBase === null)
+        {
+            $this->stringBase = sprintf(
+                '&%s=%s&api_output=%s',
+                $this->action,
+                $this->method,
+                $this->output
+            );
+        }
         return sprintf(
-            '&%s=%s&api_output=%s%s',
-            $this->action,
-            $this->method,
-            $this->output,
+            '%s%s',
+            $this->stringBase,
             $this->getParams()
         );
     }

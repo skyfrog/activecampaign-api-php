@@ -9,9 +9,13 @@ class ActiveCampaign extends Connector
 
     public $version = 1;
     public $debug = false;
+    public $cacheAction = true;
+    public $actionCache = array(
+    );
 
-    function __construct(Config $conf, $debug = false)
+    function __construct(Config $conf, $cacheAction = true, $debug = false)
     {
+        $this->cacheAction = (bool) $cacheAction;
         parent::__construct($conf, $debug);
     }
 
@@ -26,6 +30,11 @@ class ActiveCampaign extends Connector
 
     function api($path, $post_data = array())
     {
+        $action = null;
+        if ($this->cacheAction && isset($this->actionCache[$path]))
+        {
+                $action = $this->actionCache[$path];
+        }
         // IE: "contact/view"
         $components = explode("/", $path);
         $component = $components[0];
@@ -82,14 +91,22 @@ class ActiveCampaign extends Connector
                 $add_tracking = true;
                 break;
         }
-
-        $action = new Action(
-            array(
-                'method' => $component.'_'.$method,
-                'output' => $this->output
-            ),
-            $this->config
-        );
+        if ($action === null)
+        {
+            $action = new Action(
+                array(
+                    'method' => $component.'_'.$method,
+                    'output' => $this->output
+                ),
+                $this->config
+            );
+            if ($this->cacheAction === true)
+                $this->actionCache[$path] = $action;
+        }
+        else
+        {
+            $action->setOutput($this->output);
+        }
         if ($post_data)
         {
             $action->setData($post_data);
