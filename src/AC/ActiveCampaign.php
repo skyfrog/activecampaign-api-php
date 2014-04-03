@@ -10,8 +10,7 @@ class ActiveCampaign extends Connector
     public $version = 1;
     public $debug = false;
     public $cacheAction = true;
-    public $actionCache = array(
-    );
+    public $actionCache = array();
 
     function __construct(Config $conf, $cacheAction = true, $debug = false)
     {
@@ -19,16 +18,23 @@ class ActiveCampaign extends Connector
         parent::__construct($conf, $debug);
     }
 
-    function version($version)
+    public function version($version)
     {
         $this->version = (int)$version;
         if ($version == 2)
         {
-            $this->url_base = $this->url_base . "/2";
+            $this->config->setUrlBase(
+                $this->config->getUrlBase().'/2'
+            );
         }
     }
 
-    function api($path, $post_data = array())
+    public function directAction(Action $a)
+    {
+        return $this->doAction($a);
+    }
+
+    public function api($path, $post_data = array())
     {
         $action = null;
         if ($this->cacheAction && isset($this->actionCache[$path]))

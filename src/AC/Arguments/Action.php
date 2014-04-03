@@ -1,5 +1,6 @@
 <?php
 namespace AC\Arguments;
+use AC\Models\Base;
 
 
 class Action
@@ -20,6 +21,8 @@ class Action
     protected $data = '';
     protected $stringBase = null;
 
+    protected $full = false;
+
     public function __construct(array $set = array(), Config $conf = null)
     {
         foreach ($set as $k => $v)
@@ -36,8 +39,20 @@ class Action
         }
     }
 
+    public function setFullData($on = true)
+    {
+        $this->full =  (bool) $on;
+        return $this;
+    }
+
     public function setData($mixed)
     {
+        if ($mixed instanceof Base)
+        {
+            $mixed = $mixed->toArray(
+                $this->full
+            );
+        }
         if ($mixed)
         {
             if ($this->verb !== self::ACTION_PUT)
@@ -55,8 +70,13 @@ class Action
         {
             return $this->data;
         }
+        $tmpData = $this->data;
+        if ($tmpData instanceof Base)
+        {
+            $tmpData = $tmpData->toArray($this->full);
+        }
         $data = array();
-        foreach ($this->data as $key => $value)
+        foreach ($tmpData as $key => $value)
         {
             if (!is_array($value))
             {
@@ -156,12 +176,14 @@ class Action
 
     public function setOutput($out)
     {
+        $this->stringBase = null;
         $this->output = $out;
         return $this;
     }
 
     public function setMethod($method)
     {
+        $this->stringBase = null;
         $this->method = str_replace(
             array(
                 '&',
@@ -189,6 +211,7 @@ class Action
 
     public function setAction($action)
     {
+        $this->stringBase = null;
         $this->action = str_replace(
             array(
                 '&',

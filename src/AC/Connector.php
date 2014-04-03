@@ -11,6 +11,7 @@ class Connector
     protected $url = null;
     protected $output;
     protected $dbBuffer = array();
+    protected $actions = array();
 
     private static $StringOnly = array(
         'form_html',
@@ -33,6 +34,24 @@ class Connector
         else
             $this->output = 'json';
         $this->debug = $debug;
+    }
+
+    final protected function getAction($key, array $args = array())
+    {
+        if (!isset($this->actions[$key]))
+        {
+            $conf = $args && isset($args['output']) ? null : $this->config;
+            $this->actions[$key] = new Action(
+                $args,
+                $conf
+            );
+        }
+        return $this->actions[$key];
+    }
+
+    final public function __clone()
+    {
+        throw new \RuntimeException(__CLASS__. ' is not clonable!!');
     }
 
     public static function postUpdate($event)

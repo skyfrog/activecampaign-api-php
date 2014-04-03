@@ -9,6 +9,7 @@ class Config
     protected $url;
     protected $apiKey = null;
     protected $output = 'json';
+    protected $retryFullData = false;
 
     private $apiUser = '';
     private $apiPass = '';
@@ -77,6 +78,17 @@ class Config
         )->setApiPass($userPass['pass'])
         ->setApiUser($userPass['user'])
         ->getUrl();
+    }
+
+    public function getRetryFullData()
+    {
+        return $this->retryFullData;
+    }
+
+    public function setRetryFullData($bool)
+    {
+        $this->retryFullData = (bool) $bool;
+        return $this;
     }
 
     /**
