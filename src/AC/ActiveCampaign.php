@@ -48,6 +48,16 @@ class ActiveCampaign extends Connector
 
     public function version($version)
     {
+        if ($this->version === 2)
+        {//remove trailing /2 that we have set because we're in version 2-mode
+            $this->config->setUrlBase(
+                substr(
+                    $this->config->getUrlBase(),
+                    0,
+                    -2
+                )
+            );
+        }
         $this->version = (int)$version;
         if ($version == 2)
         {
@@ -179,6 +189,7 @@ class ActiveCampaign extends Connector
             $action->setParams($params);
         }
         return $this->doAction($action);
+        //leave original code here, as a todo list
         $class = ucwords($component); // IE: "contact" becomes "Contact"
         $class = __NAMESPACE__ .'\\' . $class;
 

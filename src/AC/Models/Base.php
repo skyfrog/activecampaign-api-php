@@ -53,4 +53,11 @@ abstract class Base
     {
         return $this->id;
     }
+
+    public function __toString()
+    {
+        if ($this->id)
+            return (string) $id;
+        return '';
+    }
 } 

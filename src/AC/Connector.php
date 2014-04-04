@@ -46,6 +46,12 @@ class Connector
                 $conf
             );
         }
+        if (isset($args['data']))
+        {
+            $this->actions[$key]->setData(
+                $args['data']
+            );
+        }
         return $this->actions[$key];
     }
 
