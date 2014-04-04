@@ -126,6 +126,11 @@ class Action
 
     public function setVerb($action)
     {
+        if ($this->data !== null && $this->verb === self::ACTION_POST)
+        {//force GET, add data to method as string
+            $this->method .= '&'.$this->getData(true);
+            $this->data = null;
+        }
         $this->verb = $action;
         return $this;
     }

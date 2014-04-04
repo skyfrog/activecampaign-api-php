@@ -7,6 +7,34 @@ use AC\Arguments\Config,
 class ActiveCampaign extends Connector
 {
 
+    const API_SECTION_ACCOUNT = 0;
+    const API_SECTION_AUTH = 1;
+    const API_SECTION_CAMPAIGN = 2;
+    const API_SECTION_LIST = 3;
+    const API_SECTION_CONTACT = 4;
+    const API_SECTION_DESIGN = 5;
+    const API_SECTION_FORM = 6;
+    const API_SECTION_GROUP = 7;
+    const API_SECTION_MESSAGE = 8;
+    const API_SECTION_TRACKING = 9;
+    const API_SECTION_USER = 10;
+    const API_SECTION_WEBHOOK = 11;
+
+    private $apiSections = array(
+        'Account',
+        'Auth',
+        'Campaign',
+        'CList',
+        'Contact',
+        'Design',
+        'Form',
+        'Group',
+        'Message',
+        'Tracking',
+        'User',
+        'Webhook'
+    );
+
     public $version = 1;
     public $debug = false;
     public $cacheAction = true;
@@ -27,6 +55,35 @@ class ActiveCampaign extends Connector
                 $this->config->getUrlBase().'/2'
             );
         }
+    }
+
+    /**
+     * @param int $section
+     * @param null $debug
+     * @return \AC\Connector
+     * @throws \InvalidArgumentException
+     */
+    public function getApiSection($section, $debug = null)
+    {
+        if (!isset($this->apiSections[$section]))
+        {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    '%s is not a valid section, use constants',
+                    "$section"
+                )
+            );
+        }
+        if ($this->apiSections[$section] instanceof ActiveCampaign)
+            return $this->apiSections[$section];
+        $className = __NAMESPACE__.'\\'.$this->apiSections[$section];
+        if ($debug ===  null)
+            $debug = $this->debug;
+        $this->apiSections[$section] = new $className(
+            $this->config,
+            $debug
+        );
+        return $this->apiSections[$section];
     }
 
     public function directAction(Action $a)
