@@ -160,6 +160,12 @@ class Action
     {
         if ($this->stringBase)
             $this->stringBase = null;
+        if ($mixed === null)
+        {
+            $this->params = '';
+            return $this;
+        }
+        $mixed = (string) $mixed;
         if (is_array($mixed))
         {
             $str = '';
