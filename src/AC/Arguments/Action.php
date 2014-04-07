@@ -209,13 +209,6 @@ class Action
         return array();
     }
 
-    public function setOutput($out)
-    {
-        $this->stringBase = null;
-        $this->output = $out;
-        return $this;
-    }
-
     public function setMethod($method)
     {
         $find = array('&', '=');
