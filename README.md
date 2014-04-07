@@ -34,6 +34,9 @@ If you wish to use this script, though, edit your composer file like so:
 ```
 Either one of these two is fine, though probably `post-update-cmd` is to be preferred.
 
+By default, the config falls back to the "hosted" mode (behaviour similar to the "master" branch of the original repo). Instead of creating a separate oonsite branch, the `AC\Arguments\Config` object can be set to "onsite" mode, using the class constants and/or constructor arguments.
+The mode can, of course, be set on the fly, too.
+
 ### Example (Symfony2)
 To use the Acme bunle like the official Symfony2 cookbook, here's an example of how to use this repo:
 
@@ -47,6 +50,7 @@ parameters:
         apiUser: userName
         apiPass: OptionalPass(hash)
         output: json (default output, can be changed on the fly)
+	mode: onsite (or hosted, can be changed on-the-fly, too)
 ```
 
 - Then set up the service that will be accessing the api in such a way that it will be passed these params:

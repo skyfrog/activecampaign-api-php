@@ -14,6 +14,7 @@ class Action
     const API_DEFAULT_ACTION = 'api_action';
 
     protected $action = self::API_DEFAULT_ACTION;
+    protected $mode = Config::HOSTED_MODE;
     protected $method = '';
     protected $output = 'json';
     protected $verb = self::ACTION_GET;
@@ -25,7 +26,24 @@ class Action
 
     public function __construct(array $set = array(), Config $conf = null)
     {
+        if ($conf)
+        {//set defaults
+            $this->output = $conf->getOutput();
+            $this->mode = $conf->getMode();
+        }
         foreach ($set as $k => $v)
+        {//allow overrides
+            $k = 'set'.ucfirst($k);
+            if (method_exists($this, $k))
+            {
+                $this->{$k}($v);
+            }
+        }
+    }
+
+    public function resetAction(array $params)
+    {
+        foreach ($params as $k => $v)
         {
             $k = 'set'.ucfirst($k);
             if (method_exists($this, $k))
@@ -33,10 +51,7 @@ class Action
                 $this->{$k}($v);
             }
         }
-        if ($conf)
-        {
-            $this->output = $conf->getOutput();
-        }
+        return $this;
     }
 
     public function setFullData($on = true)
@@ -191,24 +206,19 @@ class Action
 
     public function setMethod($method)
     {
+        $find = array('&', '=');
+        $replace = array('','');
+        if ($this->mode === Config::ONSITE_MODE)
+        {
+            $find[] = 'contact';
+            $replace[] = 'subscriber';
+        }
         $this->stringBase = null;
         $this->method = str_replace(
-            array(
-                '&',
-                '=',
-                'contact'
-            ),
-            array(
-                '',
-                '',
-                'subscriber'
-            ),
+            $find,
+            $replace,
             $method
         );
-        if ($this->method === 'contact')
-        {
-            $this->method = 'subscriber';
-        }
         return $this;
     }
 

@@ -176,18 +176,13 @@ class ActiveCampaign extends Connector
             if ($this->cacheAction === true)
                 $this->actionCache[$path] = $action;
         }
-        else
-        {
-            $action->setOutput($this->output);
-        }
-        if ($post_data)
-        {
-            $action->setData($post_data);
-        }
-        if ($params)
-        {
-            $action->setParams($params);
-        }
+        $reset = array(
+            'data'      => $post_data ? $post_data : array(),
+            'params'    => $params ? $params : ''
+        );
+        if ($action->getOutput() !== $this->output)
+            $reset['output'] = $this->output;
+        $action->resetAction($reset);
         return $this->doAction($action);
         //leave original code here, as a todo list
         $class = ucwords($component); // IE: "contact" becomes "Contact"

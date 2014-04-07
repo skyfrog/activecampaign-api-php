@@ -40,16 +40,15 @@ class Connector
     {
         if (!isset($this->actions[$key]))
         {
-            $conf = $args && isset($args['output']) ? null : $this->config;
             $this->actions[$key] = new Action(
                 $args,
-                $conf
+                $this->config
             );
         }
-        if (isset($args['data']))
+        else
         {
-            $this->actions[$key]->setData(
-                $args['data']
+            $this->actions[$key]->resetAction(
+                $args
             );
         }
         return $this->actions[$key];

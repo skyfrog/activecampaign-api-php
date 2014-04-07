@@ -4,6 +4,10 @@ namespace AC\Arguments;
 
 class Config
 {
+    const ONSITE_MODE = 'onsite';
+    const HOSTED_MODE = 'hosted';
+
+    protected $mode = self::HOSTED_MODE;
     protected $version = 1;
     protected $urlBase = '';
     protected $url;
@@ -26,6 +30,30 @@ class Config
         }
         //make sure the url is set-up properly
         $this->composeUrl();
+    }
+
+    public function getMode()
+    {
+        return $this->mode;
+    }
+
+    public function setMode($mode)
+    {
+        switch ($mode)
+        {
+            case self::ONSITE_MODE:
+            case self::HOSTED_MODE:
+                $this->mode = $mode;
+                break;
+            default:
+                throw new \InvalidArgumentException(
+                    sprintf(
+                        '%s is not a valid mode, please use class constants',
+                        $mode
+                    )
+                );
+        }
+        return $this;
     }
 
     public function composeUrl($url = null, $base = null, $key = null, array $userPass = null, $isHashed = true)
