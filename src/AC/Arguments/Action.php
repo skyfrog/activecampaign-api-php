@@ -160,7 +160,7 @@ class Action
     {
         if ($this->stringBase)
             $this->stringBase = null;
-        if ($mixed === null)
+        if ($mixed === null || strlen($mixed) === 0)
         {
             $this->params = '';
             return $this;
