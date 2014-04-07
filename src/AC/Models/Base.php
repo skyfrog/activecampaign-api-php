@@ -15,14 +15,7 @@ abstract class Base
         if (!$mixed)
             return $this;
         if ($mixed instanceof stdClass)
-        {
-            $mixed = json_decode(
-                json_encode(
-                    $mixed
-                ),
-                true
-            );
-        }
+            $mixed = (array) $mixed;
         if (is_array($mixed) || $mixed instanceof \Traversable)
         {
             foreach ($mixed as  $k => $v)

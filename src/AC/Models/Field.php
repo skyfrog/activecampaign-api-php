@@ -2,11 +2,12 @@
 
 namespace AC\Models;
 
-use \stdClass,
-    \DateTime;
+use \DateTime;
 
 class Field extends Base
 {
+    const CHECKBOX_DELIMITER = '||';
+
     protected $title = null;
     protected $perstag = null;
     protected $visible = null;
@@ -15,11 +16,6 @@ class Field extends Base
     protected $type = null;
     protected $options = array();
     protected $tag = null;
-
-    public function __construct(stdClass $class)
-    {
-        return parent::__construct((array) $class);
-    }
 
     /**
      * @param array $options
@@ -128,11 +124,24 @@ class Field extends Base
      */
     public function setVal($val)
     {
-        if ($this->type === 'date')
+        if ($val === null)
         {
-            $val = new DateTime($val);
+            $this->val = null;
+            return $this;
         }
-        $this->val = $val;
+        switch ($this->type)
+        {
+            case 'date':
+                $this->val = new DateTime($val);
+                break;
+            case 'checkbox':
+                if (is_array($val))
+                    $val = implode(self::CHECKBOX_DELIMITER, $val);
+                $this->val = $val;
+                break;
+            default:
+                $this->val = $val;
+        }
         return $this;
     }
 
@@ -141,22 +150,27 @@ class Field extends Base
      */
     public function getVal($asObject = false)
     {
+        if ($this->val === null)
+            return null;
         if ($asObject)
         {
             switch ($this->type)
             {
                 case 'date':
-                    $this->val = $this->val instanceof DateTime ? $this->val : new DateTime($this->val);
+                    if (!$this->val instanceof DateTime)
+                        $this->val = new DateTime($this->val);
                     return $this->val;
                 case 'checkbox':
-                    return is_array($this->val) ? $this->val : explode('||', $this->val);
+                    if (!is_array($this->val))
+                        return explode(self::CHECKBOX_DELIMITER, $this->val);
+                    return $this->val;
             }
         }
         $val = $this->val;
         if ($val instanceof DateTime)
             $val = $val->format('Y-m-d H:i:s');
         if (is_array($val))
-            $this->setVal(implode('||', $val));
+            $this->setVal(implode(self::CHECKBOX_DELIMITER, $val));
         return $this->val;
     }
 
