@@ -50,7 +50,7 @@ parameters:
         apiUser: userName
         apiPass: OptionalPass(hash)
         output: json (default output, can be changed on the fly)
-	mode: onsite (or hosted, can be changed on-the-fly, too)
+        mode: onsite (or hosted, can be changed on-the-fly, too)
 ```
 
 - Then set up the service that will be accessing the api in such a way that it will be passed these params:
