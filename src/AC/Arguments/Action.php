@@ -184,6 +184,18 @@ class Action
         return $this;
     }
 
+    public function getOutput()
+    {
+        return $this->output;
+    }
+
+    public function setOutput($out)
+    {
+        $this->stringBase = null;
+        $this->output = $out;
+        return $this;
+    }
+
     public function getParams($asArray = false)
     {
         if (!$asArray)
