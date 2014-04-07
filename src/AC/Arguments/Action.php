@@ -143,6 +143,8 @@ class Action
 
     public function setParams($mixed)
     {
+        if ($this->stringBase)
+            $this->stringBase = null;
         if (is_array($mixed))
         {
             $str = '';
@@ -244,6 +246,7 @@ class Action
                 $this->method,
                 $this->output
             );
+            $this->stringBase .= $this->params;
         }
         return sprintf(
             '%s%s',
