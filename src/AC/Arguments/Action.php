@@ -18,7 +18,7 @@ class Action
     protected $method = '';
     protected $output = 'json';
     protected $verb = self::ACTION_GET;
-    protected $params = null;
+    protected $params = '';
     protected $data = '';
     protected $stringBase = null;
 
