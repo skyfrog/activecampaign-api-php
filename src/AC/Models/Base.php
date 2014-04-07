@@ -1,6 +1,7 @@
 <?php
 namespace AC\Models;
 
+use \stdClass;
 
 abstract class Base
 {
@@ -8,6 +9,38 @@ abstract class Base
 
     protected $minArray = array();
     protected $fullArray = array();
+
+    public function __construct($mixed = null)
+    {
+        if (!$mixed)
+            return $this;
+        if ($mixed instanceof stdClass)
+        {
+            $mixed = json_decode(
+                json_encode(
+                    $mixed
+                ),
+                true
+            );
+        }
+        if (is_array($mixed) || $mixed instanceof \Traversable)
+        {
+            foreach ($mixed as  $k => $v)
+            {
+                $k = 'set'.array_map(
+                    'ucfirst',
+                    explode(
+                        '_',
+                        $k
+                    )
+                );
+                if (method_exists($this, $k))
+                {
+                    $this->{$k}($v);
+                }
+            }
+        }
+    }
 
     /**
      * @param bool $full
