@@ -4,7 +4,7 @@ namespace AC;
 class Contact extends ActiveCampaign
 {
 
-    protected $statusBuffer = true;
+    protected $statusBuffer = false;
     protected $lastPage = array();
     protected $statusses = array();
     protected $paginator = array(
@@ -59,28 +59,28 @@ class Contact extends ActiveCampaign
         return $resp;
     }
 
-    public function getContactStatus($contact)
+    public function getContactStatus($contact, $default = 0)
     {
         $contact = (string) $contact;
         if (!isset($this->statusses[$contact]))
         {
             $this->getContacts(array($contact));
             if (!isset($this->statusses[$contact]))
-                $this->statusses[$contact] = 0;
+                $this->statusses[$contact] = (int) $default;
         }
         return 0;
     }
 
-    public function getContactStatusses(array $contacts)
+    public function getContactStatusses(array $contacts, $default = 0)
     {
         $return = array();
         if ($this->statusBuffer === true)
         {
             if (empty($this->statusses))
                 $this->getContacts($contacts, 1);
-            //complete return array by setting default/missing ids to 0
+            //complete return array by setting default/missing ids to passed $default value
             foreach ($contacts as $contact)
-                $return[(string) $contact] = $this->getContactStatus($contact);
+                $return[(string) $contact] = $this->getContactStatus($contact, $default);
             return $return;
         }
         $pages = $this->getContacts($contacts, 1);//get all contacts
@@ -103,7 +103,7 @@ class Contact extends ActiveCampaign
         {//check missing contacts, set to 0
             $contact = (string) $contact;
             if (!isset($return[$contact]))
-                $return[$contact] = 0;
+                $return[$contact] = $default;
         }
         return $return;
     }
