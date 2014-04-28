@@ -24,6 +24,14 @@ class Contact extends ActiveCampaign
         return $this;
     }
 
+    public function setBufferStatus($buffer = false)
+    {
+        if (!$buffer)
+            $this->statusses = array();
+        $this->statusBuffer = $buffer;
+        return $this;
+    }
+
     public function getContactByEmail($contact)
     {
         if (is_object($contact))
@@ -94,13 +102,13 @@ class Contact extends ActiveCampaign
         }
         for ($i=0, $max = count($contacts);$i<$max;++$i)
         {
-            if (property_exists($pool, (string) $i))
+            if (isset($pool[$i]))
             {//if exists, extract status
-                $return[$pool->{$i}->id] = $pool->{$i}->status;
+                $return[$pool[$i]->id] = $pool[$i]->status;
             }
         }
         foreach ($contacts as $contact)
-        {//check missing contacts, set to 0
+        {//check missing contacts, set to default
             $contact = (string) $contact;
             if (!isset($return[$contact]))
                 $return[$contact] = $default;
