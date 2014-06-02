@@ -116,7 +116,14 @@ class Contact extends ActiveCampaign
         }
         $return = $this->getContacts($contacts, true, 1);//get all contacts
         //returns either object, or array of objects
-        $pages = !is_array($return) ? array($return) : $return;
+        if (is_array($return))
+        {
+            $pages = array();
+            for ($i=$return['pages'];$i>0;--$i)
+                $pages[] = $return[$i];
+        }
+        else
+            $pages = array($return);
         $pool = array();
         foreach ($pages as $page)
         {
