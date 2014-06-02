@@ -114,11 +114,16 @@ class Contact extends ActiveCampaign
                 $return[(string) $contact] = $this->getContactStatus($contact, $default);
             return $return;
         }
-        $pages = $this->getContacts($contacts, true, 1);//get all contacts
+        $return = $this->getContacts($contacts, true, 1);//get all contacts
+        //returns either object, or array of objects
+        $pages = !is_array($return) ? array($return) : $return;
         $pool = array();
-        for ($i=0;property_exists($pages, (string) $i);++$i)
+        foreach ($pages as $page)
         {
-            $return[$pages->{$i}->id] = $pages->{$i}->status;
+            for ($i=0;property_exists($page, (string) $i);++$i)
+            {
+                $return[$page->{$i}->id] = $page->{$i}->status;
+            }
         }
         for ($i=0, $max = count($contacts);$i<$max;++$i)
         {
