@@ -122,7 +122,7 @@ class Contact extends ActiveCampaign
         {
             for ($i=0;property_exists($page, (string) $i);++$i)
             {
-                $return[$page->{$i}->id] = $page->{$i}->status;
+                $pool[$page->{$i}->id] = $page->{$i}->status;
             }
         }
         for ($i=0, $max = count($contacts);$i<$max;++$i)
