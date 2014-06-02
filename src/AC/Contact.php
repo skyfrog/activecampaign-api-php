@@ -6,7 +6,7 @@ class Contact extends ActiveCampaign
 
     protected $statusBuffer = false;
     protected $lastPage = array();
-    protected $statusses = array();
+    protected $statuses = array();
     protected $paginator = array(
         'default'   => array(
             'offset'    => 0,
@@ -14,22 +14,43 @@ class Contact extends ActiveCampaign
         )
     );
 
-    public function bufferStatusses($bufferOn = true)
-    {
-        $this->statusBuffer = $bufferOn;
-        if (!$bufferOn)
-        {
-            $this->statusses = array();//remove current buffer, if exists
-        }
-        return $this;
-    }
-
     public function setBufferStatus($buffer = false)
     {
         if (!$buffer)
-            $this->statusses = array();
+            $this->statuses = array();//clear current buffer, if exists
         $this->statusBuffer = $buffer;
         return $this;
+    }
+
+    public function getContactsByEmail(array $contact, $method = null)
+    {
+        $return = array();
+        $call = null;
+        if ($method)
+        {
+            if (method_exists($contact[0], $method))
+                $call = true;
+            elseif (property_exists($contact[0], $method))
+                $call = false;
+        }
+        foreach ($contact as $c)
+        {
+            try
+            {
+                if ($call !== null)
+                    $c = $call ? $c->{$method}() : $c->{$method};
+                $resp = $this->getContactByEmail($c);
+                $return[$resp->email] = $resp;
+            }
+            catch(\Exception $e)
+            {
+                if ($call !== null)
+                    $return[$c] = $e;
+                else
+                    $return[serialize($c)] = $e;
+            }
+        }
+        return $return;
     }
 
     public function getContactByEmail($contact)
@@ -64,19 +85,21 @@ class Contact extends ActiveCampaign
                     (string) $action
                 )
             );
+        if ($this->statusBuffer)
+            $this->statuses[$resp->id] = $resp->status;
         return $resp;
     }
 
     public function getContactStatus($contact, $default = 0)
     {
         $contact = (string) $contact;
-        if (!isset($this->statusses[$contact]))
+        if (!isset($this->statuses[$contact]))
         {
             $this->getContacts(array($contact));
-            if (!isset($this->statusses[$contact]))
-                $this->statusses[$contact] = (int) $default;
+            if (!isset($this->statuses[$contact]))
+                return (int) $default;
         }
-        return 0;
+        return (int) $this->statuses[$contact];
     }
 
     public function getContactStatusses(array $contacts, $default = 0)
@@ -84,36 +107,25 @@ class Contact extends ActiveCampaign
         $return = array();
         if ($this->statusBuffer === true)
         {
-            if (empty($this->statusses))
+            if (empty($this->statuses))
                 $this->getContacts($contacts, 1);
             //complete return array by setting default/missing ids to passed $default value
             foreach ($contacts as $contact)
                 $return[(string) $contact] = $this->getContactStatus($contact, $default);
             return $return;
         }
-        $pages = $this->getContacts($contacts, 1);//get all contacts
+        $pages = $this->getContacts($contacts, true, 1);//get all contacts
         $pool = array();
-        for($i=$pages['pages'];$i<0;--$i)
+        for ($i=0;property_exists($pages, (string) $i);++$i)
         {
-            foreach ($pages[$i] as $contact)
-            {
-                $pool[] = $contact;
-            }
+            $return[$pages->{$i}->id] = $pages->{$i}->status;
         }
         for ($i=0, $max = count($contacts);$i<$max;++$i)
         {
-            if (isset($pool[$i]))
-            {//if exists, extract status
-                $return[$pool[$i]->id] = $pool[$i]->status;
-            }
+            if (!isset($pool[(string) $contacts[$i]]))
+                $pool[(string) $contacts[$i]] = $default;
         }
-        foreach ($contacts as $contact)
-        {//check missing contacts, set to default
-            $contact = (string) $contact;
-            if (!isset($return[$contact]))
-                $return[$contact] = $default;
-        }
-        return $return;
+        return $pool;
     }
 
     public function getContacts(array $contacts, $full = false, $page = 1)
@@ -129,6 +141,8 @@ class Contact extends ActiveCampaign
             $return['pages'] = $page-1;
             return $return;
         }
+        foreach ($contacts as $k => $c)
+            $contacts[$k] = (string) $c;//ensure we have strings
         $action = $this->getAction(
             __METHOD__,
             array(
@@ -160,7 +174,7 @@ class Contact extends ActiveCampaign
             for ($i=0, $max = count($contacts);$i<$max;++$i)
             {
                 if (property_exists($resp, $i))
-                    $this->statusses[(string) $resp->{$i}->id] = $resp->{$i}->status;
+                    $this->statuses[(string) $resp->{$i}->id] = $resp->{$i}->status;
             }
         }
         return $resp;

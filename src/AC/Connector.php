@@ -213,14 +213,6 @@ class Connector
         );
         $this->doAction($action);
         return true;
-        $testUrl = $this->getUrl().'&api_action=user_me&api_output='.$this->output;
-        $r = $this->curl($testUrl);
-        if (is_object($r) && (int)$r->result_code)
-        {
-            // successful
-            return true;
-        }
-        return false;
     }
 
     /**
@@ -248,6 +240,23 @@ class Connector
         print_r($var);
         echo '</', $element, '>';
         if (!$continue) exit();
+    }
+
+    /**
+     * If debug is enabled, this method will be called after a successful
+     * doAction call. It'll output the contents of the debug buffer, and clear it.
+     * @param $httpCode
+     * @return $this
+     */
+    protected function getDebugBuffer($httpCode)
+    {
+        static $headerSent = false;
+        if (!$headerSent)
+            header('HTTP 1.1 '. $httpCode);
+        $headerSent = true;
+        echo implode('<p>&nbsp;</p>', $this->dbBuffer);
+        $this->dbBuffer = array();
+        return $this;
     }
 
     /**
@@ -365,9 +374,9 @@ class Connector
             $debug_str1 = implode(PHP_EOL, $debug_str1);
             //if needs must, do not echo, we're setting headers below!!
             $this->dbBuffer[] = "<textarea style='height: 300px; width: 600px;'>" . $debug_str1 . "</textarea>";
+            $this->getDebugBuffer($httpCode);
         }
 
-        header("HTTP/1.1 " . $httpCode);
         $object->http_code = $httpCode;
 
         if (isset($object->result_code))
