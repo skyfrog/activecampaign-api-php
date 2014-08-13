@@ -339,35 +339,76 @@ class Connector
         }
         curl_close($request);
         $debug_str1[] = 'curl_close($ch);';
-        $object = json_decode($response);
         if ($this->debug)
         {
-            $this->dbg($object, 1, "pre", "Description: Response object (json_decode)");
+            $this->dbg($response, 1, "pre", "Description: Response object (".$this->output.")");
         }
-        $jError = json_last_error();
-        if ($jError !== \JSON_ERROR_NONE)
+        // add methods that only return a string
+        if (in_array($method, self::$StringOnly))
         {
-            // add methods that only return a string
-            if (in_array($method, self::$StringOnly))
-            {
-                return $response;
-            }
-            throw new \RuntimeException(
-                sprintf(
-                    'An unexpected problem occurred with the API request. Some causes include: invalid JSON or XML returned.
-                    URL request was sent to: %s
-                    DATA: %s
-                    Here is the actual response from the server: ---- %s%s%s
-                    JSON errors: %d - %s',
-                    $url,
-                    $data ? $todo->getData(true) : 'No data',
-                    PHP_EOL.'<br>',
-                    $response,
-                    PHP_EOL.'<br>',
-                    $jError,
-                    $this->getJSONError($jError)
-                )
-            );
+            return $response;
+        }
+        switch ($this->output)
+        {
+            case 'json':
+                $object = json_decode($response);
+                $jError = json_last_error();
+                if ($jError !== \JSON_ERROR_NONE)
+                {
+                    throw new \RuntimeException(
+                        sprintf(
+                            'An unexpected problem occurred with the API request. Some causes include: invalid JSON or XML returned.
+                            URL request was sent to: %s
+                            DATA: %s
+                            Here is the actual response from the server: ---- %s%s%s
+                            JSON errors: %d - %s',
+                            $url,
+                            $data ? $todo->getData(true) : 'No data',
+                            PHP_EOL.'<br>',
+                            $response,
+                            PHP_EOL.'<br>',
+                            $jError,
+                            $this->getJSONError($jError)
+                        )
+                    );
+                }
+                break;
+            case 'serialize':
+                $object = unserialize($response);
+                if (!$object)
+                    throw new \RuntimeException(
+                        sprintf(
+                            'An unexpected problem occurred with the API request. Some causes include: invalid JSON or XML returned.
+                            URL request was sent to: %s
+                            DATA: %s
+                            Here is the actual response from the server: ---- %s%s%s',
+                            $url,
+                            $data ? $todo->getData(true) : 'No data',
+                            PHP_EOL.'<br>',
+                            $response,
+                            PHP_EOL
+                        )
+                    );
+                //ensure instanceof \stdClass through json_decode
+                if (!$object instanceof \stdClass)
+                    $object = json_decode(
+                        json_encode(
+                            (array) $object
+                        )
+                    );
+                break;
+            case 'xml':
+                if (function_exists('simplexml_load_string'))
+                {//simpleXML extension is installed
+                    $object = $this->parseSimpleXML(
+                        simplexml_load_string($response)
+                    );
+                    break;
+                }
+                $dom = new \DOMDocument;
+                $dom->loadXML($response);
+                $object = $this->parseXMLDom($dom);
+                break;
         }
         if ($this->debug)
         {
@@ -377,6 +418,7 @@ class Connector
             $this->getDebugBuffer($httpCode);
         }
 
+        /** @var \stdClass $object */
         $object->http_code = $httpCode;
 
         if (isset($object->result_code))
@@ -430,6 +472,53 @@ class Connector
         }
     }
 
+    /**
+     * @param \SimpleXMLElement $dom
+     * @param bool $toObject
+     * @return array|\stdClass
+     */
+    protected function parseSimpleXML(\SimpleXMLElement $dom, $toObject = true)
+    {
+        $array = array();
+        /** @var \SimpleXMLElement $val */
+        foreach ($dom as $tag => $val)
+        {
+            if ($val->children()->count())
+                $array[$tag] = $this->parseSimpleXML($val, $toObject);
+            else
+                $array[$tag] = (string) $val;
+        }
+        if ($toObject === true)//use json, (object) cast is non-recursive
+            return json_decode(
+                json_encode(
+                    $array
+                )
+            );
+        return $array;
+    }
+
+    /**
+     * Recursive DOMDocument parse 2 stdClass
+     * @param \DOMNode $node
+     * @return \stdClass
+     */
+    protected function parseXMLDom(\DOMNode $node)
+    {
+        $root = $node;
+        if ($node->firstChild->nodeName === 'document')
+            $root = $node->firstChild;
+        $result = new \stdClass();
+        /** @var \DOMNode $child */
+        foreach ($root->childNodes as $child)
+        {
+            if ($child->childNodes->length > 1)
+                $result->{$child->nodeName} = $this->parseXMLDom($child);
+            elseif ($child->nodeName{0} !== '#')
+                $result->{$child->nodeName} = trim($child->textContent);
+        }
+        return $result;
+    }
+
     public function curl($url, $post_data = array(), $verb = "GET", $custom_method = "")
     {
         if ($this->version == 1)
@@ -438,7 +527,7 @@ class Connector
             $method = preg_match("/api_action=[^&]*/i", $url, $matches);
             if ($matches)
             {
-                $method = preg_match("/[^=]*$/i", $matches[0], $matches2);
+                preg_match("/[^=]*$/i", $matches[0], $matches2);
                 $method = $matches2[0];
             } elseif ($custom_method)
             {
