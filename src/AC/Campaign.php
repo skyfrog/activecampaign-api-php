@@ -1,6 +1,8 @@
 <?php
 namespace AC;
 use AC\Models\CampaignPaginator;
+use AC\Models\Contact;
+use AC\Models\Campaign as CampaignM;
 use AC\Models\Interfaces\Paginator;
 
 class Campaign extends ActiveCampaign
@@ -48,6 +50,52 @@ class Campaign extends ActiveCampaign
             );
         } while ($paginator->setNextPage()->getOffset());//if end of pagination is reached, offset is reset to 0
         return $campaigns;
+    }
+
+    /**
+     * @param Models\Campaign $campaign
+     * @return array
+     * @throws \RuntimeException
+     */
+    public function getUnopenList(CampaignM $campaign)
+    {
+        if (!$campaign->getUnreadCount())
+            return array();
+        $data = array(
+            'campaignid'    => $campaign->getId(),
+            'messageid'     => $campaign->getMessageid()
+        );
+        $action = $this->getAction(
+            __METHOD__,
+            array(
+                'method'    => 'campaign_report_unopen_list',
+                'data'      => $data
+            )
+        );
+        $list = $this->doAction(
+            $action
+        );
+        if (!isset($list->result_code) || $list->result_code == '0')
+            throw new \RuntimeException(
+                sprintf(
+                    'Failed to get unopen list: (HTTP: %d) %s',
+                    isset($list->http_code) ? $list->http_code : 0,
+                    isset($list->result_message) ? $list->result_message : 'Unknown'
+                )
+            );
+        $contacts = array();
+        for($i=0, $total = $campaign->getUnreadCount();$i<$total;++$i)
+        {
+            if (isset($list->{$i}))
+                $contacts[] = new Contact(
+                    $list->{$i}
+                );
+        }
+        while(isset($list->{$i}))//make sure we have all contacts
+            $contacts[] = new Contact(
+                $list->{$i++}
+            );
+        return $contacts;
     }
 
     function create($params, $post_data)

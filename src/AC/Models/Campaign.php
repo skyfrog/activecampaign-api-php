@@ -5,7 +5,14 @@ use \DateTime;
 
 class Campaign extends Base
 {
-    const CAMPAIGN_TYPE_SINGLE = 'single';
+    const TYPE_SINGLE = 'single';
+    const TYPE_RECURRING = 'recurring';
+    const TYPE_SPLIT = 'split';
+    const TYPE_RESPONDER = 'responder';
+    const TYPE_REMINDER = 'reminder';
+    const TYPE_SPECIAL = 'special';
+    const TYPE_ACTIVERSS = 'activerss';
+    const TYPE_TEXT = 'text';
 
     /**
      * @var string
@@ -106,6 +113,20 @@ class Campaign extends Base
      * @var \DateTime
      */
     protected $mdate = null;
+
+    /**
+     * @var array
+     */
+    private static $ValidTypes = array(
+        self::TYPE_ACTIVERSS,
+        self::TYPE_RECURRING,
+        self::TYPE_REMINDER,
+        self::TYPE_RESPONDER,
+        self::TYPE_SINGLE,
+        self::TYPE_SPECIAL,
+        self::TYPE_SPLIT,
+        self::TYPE_TEXT
+    );
 
     /**
      * @param int $mid
@@ -405,9 +426,17 @@ class Campaign extends Base
     /**
      * @param string $type
      * @return $this
+     * @throws \InvalidArgumentException
      */
     public function setType($type)
     {
+        if (!in_array($type, static::$ValidTypes))
+            throw new \InvalidArgumentException(
+                sprintf(
+                    '%s is not a valid type, please use class constants',
+                    $type
+                )
+            );
         $this->type = $type;
         return $this;
     }
