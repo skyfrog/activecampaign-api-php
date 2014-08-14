@@ -1,6 +1,6 @@
 <?php
 namespace AC;
-use AC\Models\Campaign as CampaignM;
+use AC\Models\CampaignPaginator;
 use AC\Models\Interfaces\Paginator;
 
 class Campaign extends ActiveCampaign
@@ -28,7 +28,27 @@ class Campaign extends ActiveCampaign
         return $paginator;
     }
 
-
+    /**
+     * @param array $params
+     * @return array
+     */
+    public function getAllCampaigns(array $params = null)
+    {
+        $paginator = new CampaignPaginator();
+        if ($params)
+            $paginator->setResponse($params);//allows for build setting of offset, limit, public, filter, etc...
+        $campaigns = array();
+        do
+        {
+            $campaigns = array_merge(
+                $campaigns,
+                $this->paginateCampaigns(
+                    $paginator
+                )->getData()
+            );
+        } while ($paginator->setNextPage()->getOffset());//if end of pagination is reached, offset is reset to 0
+        return $campaigns;
+    }
 
     function create($params, $post_data)
     {

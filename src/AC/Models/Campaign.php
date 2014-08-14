@@ -93,6 +93,11 @@ class Campaign extends Base
     protected $basemessageid = null;
 
     /**
+     * @var int
+     */
+    protected $messageid = null;
+
+    /**
      * @var \DateTime
      */
     protected $sdate = null;
@@ -101,6 +106,24 @@ class Campaign extends Base
      * @var \DateTime
      */
     protected $mdate = null;
+
+    /**
+     * @param int $mid
+     * @return $this
+     */
+    public function setMessageid($mid)
+    {
+        $this->messageid = (int) $mid;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMessageid()
+    {
+        return $this->messageid;
+    }
 
     /**
      * @param int $basemessageid
@@ -447,11 +470,15 @@ class Campaign extends Base
     {
         if ($this->unreadCount === null)
         {
-            $this->setUnreadCount(
-                $this->sendAmt - (
-                    $this->getTotalBounces() + $this->getUniqueopens()
-                )
-            );
+            $total = $this->sendAmt ? : $this->totalAmt;
+            if ($total)
+                $this->setUnreadCount(
+                    $total - (
+                        $this->getTotalBounces() + $this->getUniqueopens()
+                    )
+                );
+            else
+                $this->setUnreadCount($total);
         }
         return $this->unreadCount;
     }

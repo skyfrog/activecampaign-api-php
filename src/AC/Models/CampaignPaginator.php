@@ -271,7 +271,7 @@ class CampaignPaginator extends Base implements Paginator
      */
     public function setNextPage()
     {
-        if ($this->cnt === $this->limit && $this->total%$this->limit)
+        if ($this->canPaginateFurther())
         {
             $this->cnt = 0;
             $this->setRows(array())
@@ -291,10 +291,10 @@ class CampaignPaginator extends Base implements Paginator
     public function toArray()
     {
         $array = array(
-            'offset' => 0,
-            'limit'  => 100,
-            'filter' => '0',
-            'public' => '1'
+            'offset' => $this->getOffset(),
+            'limit'  => $this->getLimit(),
+            'filter' => $this->getFilter(),
+            'public' => $this->getFilter()
         );
         if ($this->getSort())
             $array['sort'] = $this->getSort();
