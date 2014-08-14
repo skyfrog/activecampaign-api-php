@@ -1,0 +1,941 @@
+<?xml version='1.0' encoding='utf-8'?>
+<campaign_select_array_paginator>
+    <paginator/>
+    <offset>0</offset>
+    <limit>10</limit>
+    <total>214</total>
+    <cnt>10</cnt>
+    <rows>
+        <id>1</id>
+        <type>single</type>
+        <userid>10</userid>
+        <filterid>0</filterid>
+        <bounceid>-1</bounceid>
+        <realcid>0</realcid>
+        <sendid>0</sendid>
+        <threadid>0</threadid>
+        <basetemplateid>35</basetemplateid>
+        <basemessageid>0</basemessageid>
+        <source>web</source>
+        <name>Campaign Name 1</name>
+        <cdate>2014-08-11 15:41:42</cdate>
+        <mdate>2014-08-11 15:51:58</mdate>
+        <sdate>2014-08-16 15:48:00</sdate>
+        <ldate>9999-01-01 00:00:00</ldate>
+        <send_amt>0</send_amt>
+        <total_amt>0</total_amt>
+        <opens>2</opens>
+        <uniqueopens>1</uniqueopens>
+        <linkclicks>1</linkclicks>
+        <uniquelinkclicks>1</uniquelinkclicks>
+        <subscriberclicks>1</subscriberclicks>
+        <forwards>0</forwards>
+        <uniqueforwards>0</uniqueforwards>
+        <hardbounces>0</hardbounces>
+        <softbounces>0</softbounces>
+        <unsubscribes>0</unsubscribes>
+        <unsubreasons>0</unsubreasons>
+        <updates>0</updates>
+        <socialshares>0</socialshares>
+        <status>6</status>
+        <public>1</public>
+        <mail_transfer>0</mail_transfer>
+        <mail_send>0</mail_send>
+        <mail_cleanup>0</mail_cleanup>
+        <mailer_log_file>0</mailer_log_file>
+        <tracklinks>all</tracklinks>
+        <tracklinksanalytics>0</tracklinksanalytics>
+        <trackreads>1</trackreads>
+        <trackreadsanalytics>0</trackreadsanalytics>
+        <analytics_campaign_name/>
+        <tweet>0</tweet>
+        <facebook>0</facebook>
+        <survey/>
+        <embed_images>0</embed_images>
+        <htmlunsub>0</htmlunsub>
+        <textunsub>0</textunsub>
+        <htmlunsubdata/>
+        <textunsubdata/>
+        <recurring>day1</recurring>
+        <willrecur>0</willrecur>
+        <split_type>even</split_type>
+        <split_offset>2</split_offset>
+        <split_offset_type>day</split_offset_type>
+        <split_winner_messageid>0</split_winner_messageid>
+        <split_winner_awaiting>0</split_winner_awaiting>
+        <responder_offset>0</responder_offset>
+        <responder_type>subscribe</responder_type>
+        <responder_existing>0</responder_existing>
+        <reminder_field>sdate</reminder_field>
+        <reminder_format>yyyy-mm-dd</reminder_format>
+        <reminder_type>month_day</reminder_type>
+        <reminder_offset>0</reminder_offset>
+        <reminder_offset_type>day</reminder_offset_type>
+        <reminder_offset_sign>+</reminder_offset_sign>
+        <reminder_last_cron_run/>
+        <activerss_interval>year1</activerss_interval>
+        <activerss_url/>
+        <activerss_items>10</activerss_items>
+        <ip4>1234567980</ip4>
+        <laststep>result</laststep>
+        <managetext>0</managetext>
+        <schedule>1</schedule>
+        <waitpreview>0</waitpreview>
+        <sortorder>4</sortorder>
+        <lists>1</lists>
+        <processid>0</processid>
+        <canresend>1</canresend>
+        <ago_cdate>2 days</ago_cdate>
+        <ago_mdate>2 days</ago_mdate>
+        <ago_sdate>2 days</ago_sdate>
+        <ago_ldate>7989 years</ago_ldate>
+        <original_amt>0</original_amt>
+        <original_ldate/>
+        <ago_original_ldate>-</ago_original_ldate>
+        <messageid>578</messageid>
+        <folders></folders>
+        <avatars></avatars>
+        <screenshot>http://www.image.url/img.png</screenshot>
+        <hasimage>1</hasimage>
+    </rows>
+    <rows>
+        <id>2</id>
+        <type>single</type>
+        <userid>10</userid>
+        <filterid>24</filterid>
+        <bounceid>-1</bounceid>
+        <realcid>0</realcid>
+        <sendid>0</sendid>
+        <threadid>0</threadid>
+        <basetemplateid>39</basetemplateid>
+        <basemessageid>0</basemessageid>
+        <source>web</source>
+        <name>Campaign Name 2</name>
+        <cdate>2014-08-12 12:11:41</cdate>
+        <mdate>2014-08-12 15:40:26</mdate>
+        <sdate>2014-08-15 11:35:00</sdate>
+        <ldate>9999-01-01 00:00:00</ldate>
+        <send_amt>0</send_amt>
+        <total_amt>0</total_amt>
+        <opens>0</opens>
+        <uniqueopens>0</uniqueopens>
+        <linkclicks>0</linkclicks>
+        <uniquelinkclicks>0</uniquelinkclicks>
+        <subscriberclicks>0</subscriberclicks>
+        <forwards>0</forwards>
+        <uniqueforwards>0</uniqueforwards>
+        <hardbounces>0</hardbounces>
+        <softbounces>0</softbounces>
+        <unsubscribes>0</unsubscribes>
+        <unsubreasons>0</unsubreasons>
+        <updates>0</updates>
+        <socialshares>0</socialshares>
+        <status>1</status>
+        <public>1</public>
+        <mail_transfer>0</mail_transfer>
+        <mail_send>0</mail_send>
+        <mail_cleanup>0</mail_cleanup>
+        <mailer_log_file>0</mailer_log_file>
+        <tracklinks>all</tracklinks>
+        <tracklinksanalytics>0</tracklinksanalytics>
+        <trackreads>1</trackreads>
+        <trackreadsanalytics>0</trackreadsanalytics>
+        <analytics_campaign_name/>
+        <tweet>0</tweet>
+        <facebook>0</facebook>
+        <survey/>
+        <embed_images>0</embed_images>
+        <htmlunsub>0</htmlunsub>
+        <textunsub>0</textunsub>
+        <htmlunsubdata/>
+        <textunsubdata/>
+        <recurring>day1</recurring>
+        <willrecur>0</willrecur>
+        <split_type>even</split_type>
+        <split_offset>2</split_offset>
+        <split_offset_type>day</split_offset_type>
+        <split_winner_messageid>0</split_winner_messageid>
+        <split_winner_awaiting>0</split_winner_awaiting>
+        <responder_offset>0</responder_offset>
+        <responder_type>subscribe</responder_type>
+        <responder_existing>0</responder_existing>
+        <reminder_field>sdate</reminder_field>
+        <reminder_format>yyyy-mm-dd</reminder_format>
+        <reminder_type>month_day</reminder_type>
+        <reminder_offset>0</reminder_offset>
+        <reminder_offset_type>day</reminder_offset_type>
+        <reminder_offset_sign>+</reminder_offset_sign>
+        <reminder_last_cron_run/>
+        <activerss_interval>year1</activerss_interval>
+        <activerss_url/>
+        <activerss_items>10</activerss_items>
+        <ip4>1234567980</ip4>
+        <laststep>result</laststep>
+        <managetext>0</managetext>
+        <schedule>1</schedule>
+        <waitpreview>0</waitpreview>
+        <sortorder>3</sortorder>
+        <lists>2</lists>
+        <processid>0</processid>
+        <canresend>1</canresend>
+        <ago_cdate>1 day</ago_cdate>
+        <ago_mdate>1 day</ago_mdate>
+        <ago_sdate>1 day</ago_sdate>
+        <ago_ldate>7989 years</ago_ldate>
+        <original_amt>0</original_amt>
+        <original_ldate/>
+        <ago_original_ldate>-</ago_original_ldate>
+        <messageid>586</messageid>
+        <folders></folders>
+        <avatars></avatars>
+        <screenshot>http://www.image.url/img.png</screenshot>
+        <hasimage>1</hasimage>
+    </rows>
+    <rows>
+        <id>3</id>
+        <type>single</type>
+        <userid>10</userid>
+        <filterid>26</filterid>
+        <bounceid>-1</bounceid>
+        <realcid>0</realcid>
+        <sendid>0</sendid>
+        <threadid>0</threadid>
+        <basetemplateid>40</basetemplateid>
+        <basemessageid>0</basemessageid>
+        <source>web</source>
+        <name>Campaign Name 3</name>
+        <cdate>2014-08-12 13:12:57</cdate>
+        <mdate>2014-08-12 15:52:28</mdate>
+        <sdate>2014-08-15 11:35:00</sdate>
+        <ldate>9999-01-01 00:00:00</ldate>
+        <send_amt>0</send_amt>
+        <total_amt>0</total_amt>
+        <opens>0</opens>
+        <uniqueopens>0</uniqueopens>
+        <linkclicks>0</linkclicks>
+        <uniquelinkclicks>0</uniquelinkclicks>
+        <subscriberclicks>0</subscriberclicks>
+        <forwards>0</forwards>
+        <uniqueforwards>0</uniqueforwards>
+        <hardbounces>0</hardbounces>
+        <softbounces>0</softbounces>
+        <unsubscribes>0</unsubscribes>
+        <unsubreasons>0</unsubreasons>
+        <updates>0</updates>
+        <socialshares>0</socialshares>
+        <status>1</status>
+        <public>1</public>
+        <mail_transfer>0</mail_transfer>
+        <mail_send>0</mail_send>
+        <mail_cleanup>0</mail_cleanup>
+        <mailer_log_file>0</mailer_log_file>
+        <tracklinks>all</tracklinks>
+        <tracklinksanalytics>0</tracklinksanalytics>
+        <trackreads>1</trackreads>
+        <trackreadsanalytics>0</trackreadsanalytics>
+        <analytics_campaign_name/>
+        <tweet>0</tweet>
+        <facebook>0</facebook>
+        <survey/>
+        <embed_images>0</embed_images>
+        <htmlunsub>0</htmlunsub>
+        <textunsub>0</textunsub>
+        <htmlunsubdata/>
+        <textunsubdata/>
+        <recurring>day1</recurring>
+        <willrecur>0</willrecur>
+        <split_type>even</split_type>
+        <split_offset>2</split_offset>
+        <split_offset_type>day</split_offset_type>
+        <split_winner_messageid>0</split_winner_messageid>
+        <split_winner_awaiting>0</split_winner_awaiting>
+        <responder_offset>0</responder_offset>
+        <responder_type>subscribe</responder_type>
+        <responder_existing>0</responder_existing>
+        <reminder_field>sdate</reminder_field>
+        <reminder_format>yyyy-mm-dd</reminder_format>
+        <reminder_type>month_day</reminder_type>
+        <reminder_offset>0</reminder_offset>
+        <reminder_offset_type>day</reminder_offset_type>
+        <reminder_offset_sign>+</reminder_offset_sign>
+        <reminder_last_cron_run/>
+        <activerss_interval>year1</activerss_interval>
+        <activerss_url/>
+        <activerss_items>10</activerss_items>
+        <ip4>1234567980</ip4>
+        <laststep>result</laststep>
+        <managetext>0</managetext>
+        <schedule>1</schedule>
+        <waitpreview>0</waitpreview>
+        <sortorder>3</sortorder>
+        <lists>2</lists>
+        <processid>0</processid>
+        <canresend>1</canresend>
+        <ago_cdate>1 day</ago_cdate>
+        <ago_mdate>1 day</ago_mdate>
+        <ago_sdate>1 day</ago_sdate>
+        <ago_ldate>7989 years</ago_ldate>
+        <original_amt>0</original_amt>
+        <original_ldate/>
+        <ago_original_ldate>-</ago_original_ldate>
+        <messageid>587</messageid>
+        <folders></folders>
+        <avatars></avatars>
+        <screenshot>http://www.image.url/img.png</screenshot>
+        <hasimage>1</hasimage>
+    </rows>
+    <rows>
+        <id>4</id>
+        <type>single</type>
+        <userid>10</userid>
+        <filterid>21</filterid>
+        <bounceid>-1</bounceid>
+        <realcid>0</realcid>
+        <sendid>0</sendid>
+        <threadid>0</threadid>
+        <basetemplateid>38</basetemplateid>
+        <basemessageid>0</basemessageid>
+        <source>web</source>
+        <name>Campaign Name 4</name>
+        <cdate>2014-08-12 11:47:52</cdate>
+        <mdate>2014-08-12 13:18:23</mdate>
+        <sdate>2014-08-15 11:15:00</sdate>
+        <ldate>9999-01-01 00:00:00</ldate>
+        <send_amt>0</send_amt>
+        <total_amt>0</total_amt>
+        <opens>3</opens>
+        <uniqueopens>1</uniqueopens>
+        <linkclicks>0</linkclicks>
+        <uniquelinkclicks>0</uniquelinkclicks>
+        <subscriberclicks>0</subscriberclicks>
+        <forwards>0</forwards>
+        <uniqueforwards>0</uniqueforwards>
+        <hardbounces>0</hardbounces>
+        <softbounces>0</softbounces>
+        <unsubscribes>0</unsubscribes>
+        <unsubreasons>0</unsubreasons>
+        <updates>0</updates>
+        <socialshares>0</socialshares>
+        <status>1</status>
+        <public>1</public>
+        <mail_transfer>0</mail_transfer>
+        <mail_send>0</mail_send>
+        <mail_cleanup>0</mail_cleanup>
+        <mailer_log_file>0</mailer_log_file>
+        <tracklinks>all</tracklinks>
+        <tracklinksanalytics>0</tracklinksanalytics>
+        <trackreads>1</trackreads>
+        <trackreadsanalytics>0</trackreadsanalytics>
+        <analytics_campaign_name/>
+        <tweet>0</tweet>
+        <facebook>0</facebook>
+        <survey/>
+        <embed_images>0</embed_images>
+        <htmlunsub>0</htmlunsub>
+        <textunsub>0</textunsub>
+        <htmlunsubdata/>
+        <textunsubdata/>
+        <recurring>day1</recurring>
+        <willrecur>0</willrecur>
+        <split_type>even</split_type>
+        <split_offset>2</split_offset>
+        <split_offset_type>day</split_offset_type>
+        <split_winner_messageid>0</split_winner_messageid>
+        <split_winner_awaiting>0</split_winner_awaiting>
+        <responder_offset>0</responder_offset>
+        <responder_type>subscribe</responder_type>
+        <responder_existing>0</responder_existing>
+        <reminder_field>sdate</reminder_field>
+        <reminder_format>yyyy-mm-dd</reminder_format>
+        <reminder_type>month_day</reminder_type>
+        <reminder_offset>0</reminder_offset>
+        <reminder_offset_type>day</reminder_offset_type>
+        <reminder_offset_sign>+</reminder_offset_sign>
+        <reminder_last_cron_run/>
+        <activerss_interval>year1</activerss_interval>
+        <activerss_url/>
+        <activerss_items>10</activerss_items>
+        <ip4>1234567980</ip4>
+        <laststep>result</laststep>
+        <managetext>0</managetext>
+        <schedule>1</schedule>
+        <waitpreview>0</waitpreview>
+        <sortorder>3</sortorder>
+        <lists>2</lists>
+        <processid>0</processid>
+        <canresend>1</canresend>
+        <ago_cdate>1 day</ago_cdate>
+        <ago_mdate>1 day</ago_mdate>
+        <ago_sdate>1 day</ago_sdate>
+        <ago_ldate>7989 years</ago_ldate>
+        <original_amt>0</original_amt>
+        <original_ldate/>
+        <ago_original_ldate>-</ago_original_ldate>
+        <messageid>585</messageid>
+        <folders></folders>
+        <avatars></avatars>
+        <screenshot>http://www.image.url/img.png</screenshot>
+        <hasimage>1</hasimage>
+    </rows>
+    <rows>
+        <id>5</id>
+        <type>single</type>
+        <userid>10</userid>
+        <filterid>0</filterid>
+        <bounceid>-1</bounceid>
+        <realcid>0</realcid>
+        <sendid>0</sendid>
+        <threadid>0</threadid>
+        <basetemplateid>36</basetemplateid>
+        <basemessageid>0</basemessageid>
+        <source>web</source>
+        <name>Campaign Name 5</name>
+        <cdate>2014-08-11 16:00:27</cdate>
+        <mdate>2014-08-14 11:42:41</mdate>
+        <sdate>2014-08-14 19:15:00</sdate>
+        <ldate>9999-01-01 00:00:00</ldate>
+        <send_amt>0</send_amt>
+        <total_amt>0</total_amt>
+        <opens>9</opens>
+        <uniqueopens>1</uniqueopens>
+        <linkclicks>6</linkclicks>
+        <uniquelinkclicks>4</uniquelinkclicks>
+        <subscriberclicks>1</subscriberclicks>
+        <forwards>0</forwards>
+        <uniqueforwards>0</uniqueforwards>
+        <hardbounces>0</hardbounces>
+        <softbounces>0</softbounces>
+        <unsubscribes>0</unsubscribes>
+        <unsubreasons>0</unsubreasons>
+        <updates>0</updates>
+        <socialshares>0</socialshares>
+        <status>1</status>
+        <public>1</public>
+        <mail_transfer>0</mail_transfer>
+        <mail_send>0</mail_send>
+        <mail_cleanup>0</mail_cleanup>
+        <mailer_log_file>0</mailer_log_file>
+        <tracklinks>all</tracklinks>
+        <tracklinksanalytics>0</tracklinksanalytics>
+        <trackreads>1</trackreads>
+        <trackreadsanalytics>0</trackreadsanalytics>
+        <analytics_campaign_name/>
+        <tweet>0</tweet>
+        <facebook>0</facebook>
+        <survey/>
+        <embed_images>0</embed_images>
+        <htmlunsub>0</htmlunsub>
+        <textunsub>0</textunsub>
+        <htmlunsubdata/>
+        <textunsubdata/>
+        <recurring>day1</recurring>
+        <willrecur>0</willrecur>
+        <split_type>even</split_type>
+        <split_offset>2</split_offset>
+        <split_offset_type>day</split_offset_type>
+        <split_winner_messageid>0</split_winner_messageid>
+        <split_winner_awaiting>0</split_winner_awaiting>
+        <responder_offset>0</responder_offset>
+        <responder_type>subscribe</responder_type>
+        <responder_existing>0</responder_existing>
+        <reminder_field>sdate</reminder_field>
+        <reminder_format>yyyy-mm-dd</reminder_format>
+        <reminder_type>month_day</reminder_type>
+        <reminder_offset>0</reminder_offset>
+        <reminder_offset_type>day</reminder_offset_type>
+        <reminder_offset_sign>+</reminder_offset_sign>
+        <reminder_last_cron_run/>
+        <activerss_interval>year1</activerss_interval>
+        <activerss_url/>
+        <activerss_items>10</activerss_items>
+        <ip4>1234567980</ip4>
+        <laststep>result</laststep>
+        <managetext>0</managetext>
+        <schedule>1</schedule>
+        <waitpreview>0</waitpreview>
+        <sortorder>3</sortorder>
+        <lists>2</lists>
+        <processid>0</processid>
+        <canresend>1</canresend>
+        <ago_cdate>2 days</ago_cdate>
+        <ago_mdate>1 hour</ago_mdate>
+        <ago_sdate>9 hours</ago_sdate>
+        <ago_ldate>7989 years</ago_ldate>
+        <original_amt>0</original_amt>
+        <original_ldate/>
+        <ago_original_ldate>-</ago_original_ldate>
+        <messageid>580</messageid>
+        <folders></folders>
+        <avatars></avatars>
+        <screenshot>http://www.image.url/img.png</screenshot>
+        <hasimage>1</hasimage>
+    </rows>
+    <rows>
+        <id>6</id>
+        <type>single</type>
+        <userid>10</userid>
+        <filterid>0</filterid>
+        <bounceid>-1</bounceid>
+        <realcid>0</realcid>
+        <sendid>0</sendid>
+        <threadid>0</threadid>
+        <basetemplateid>36</basetemplateid>
+        <basemessageid>0</basemessageid>
+        <source>web</source>
+        <name>Campaign Name 6</name>
+        <cdate>2014-08-11 15:12:26</cdate>
+        <mdate>2014-08-14 11:45:56</mdate>
+        <sdate>2014-08-14 19:00:00</sdate>
+        <ldate>9999-01-01 00:00:00</ldate>
+        <send_amt>0</send_amt>
+        <total_amt>0</total_amt>
+        <opens>20</opens>
+        <uniqueopens>1</uniqueopens>
+        <linkclicks>5</linkclicks>
+        <uniquelinkclicks>5</uniquelinkclicks>
+        <subscriberclicks>2</subscriberclicks>
+        <forwards>0</forwards>
+        <uniqueforwards>0</uniqueforwards>
+        <hardbounces>0</hardbounces>
+        <softbounces>0</softbounces>
+        <unsubscribes>0</unsubscribes>
+        <unsubreasons>0</unsubreasons>
+        <updates>0</updates>
+        <socialshares>0</socialshares>
+        <status>1</status>
+        <public>1</public>
+        <mail_transfer>0</mail_transfer>
+        <mail_send>0</mail_send>
+        <mail_cleanup>0</mail_cleanup>
+        <mailer_log_file>0</mailer_log_file>
+        <tracklinks>all</tracklinks>
+        <tracklinksanalytics>0</tracklinksanalytics>
+        <trackreads>1</trackreads>
+        <trackreadsanalytics>0</trackreadsanalytics>
+        <analytics_campaign_name/>
+        <tweet>0</tweet>
+        <facebook>0</facebook>
+        <survey/>
+        <embed_images>0</embed_images>
+        <htmlunsub>0</htmlunsub>
+        <textunsub>0</textunsub>
+        <htmlunsubdata/>
+        <textunsubdata/>
+        <recurring>day1</recurring>
+        <willrecur>0</willrecur>
+        <split_type>even</split_type>
+        <split_offset>2</split_offset>
+        <split_offset_type>day</split_offset_type>
+        <split_winner_messageid>0</split_winner_messageid>
+        <split_winner_awaiting>0</split_winner_awaiting>
+        <responder_offset>0</responder_offset>
+        <responder_type>subscribe</responder_type>
+        <responder_existing>0</responder_existing>
+        <reminder_field>sdate</reminder_field>
+        <reminder_format>yyyy-mm-dd</reminder_format>
+        <reminder_type>month_day</reminder_type>
+        <reminder_offset>0</reminder_offset>
+        <reminder_offset_type>day</reminder_offset_type>
+        <reminder_offset_sign>+</reminder_offset_sign>
+        <reminder_last_cron_run/>
+        <activerss_interval>year1</activerss_interval>
+        <activerss_url/>
+        <activerss_items>10</activerss_items>
+        <ip4>1234567980</ip4>
+        <laststep>result</laststep>
+        <managetext>0</managetext>
+        <schedule>1</schedule>
+        <waitpreview>0</waitpreview>
+        <sortorder>3</sortorder>
+        <lists>2</lists>
+        <processid>0</processid>
+        <canresend>1</canresend>
+        <ago_cdate>2 days</ago_cdate>
+        <ago_mdate>1 hour</ago_mdate>
+        <ago_sdate>8 hours</ago_sdate>
+        <ago_ldate>7989 years</ago_ldate>
+        <original_amt>0</original_amt>
+        <original_ldate/>
+        <ago_original_ldate>-</ago_original_ldate>
+        <messageid>576</messageid>
+        <folders></folders>
+        <avatars></avatars>
+        <screenshot>http://www.image.url/img.png</screenshot>
+        <hasimage>1</hasimage>
+    </rows>
+    <rows>
+        <id>7</id>
+        <type>single</type>
+        <userid>10</userid>
+        <filterid>0</filterid>
+        <bounceid>-1</bounceid>
+        <realcid>0</realcid>
+        <sendid>0</sendid>
+        <threadid>0</threadid>
+        <basetemplateid>35</basetemplateid>
+        <basemessageid>0</basemessageid>
+        <source>copy</source>
+        <name>Campaign Name 7</name>
+        <cdate>2014-08-11 15:52:27</cdate>
+        <mdate>2014-08-14 11:35:57</mdate>
+        <sdate>2014-08-14 18:30:00</sdate>
+        <ldate>9999-01-01 00:00:00</ldate>
+        <send_amt>0</send_amt>
+        <total_amt>0</total_amt>
+        <opens>6</opens>
+        <uniqueopens>1</uniqueopens>
+        <linkclicks>6</linkclicks>
+        <uniquelinkclicks>4</uniquelinkclicks>
+        <subscriberclicks>1</subscriberclicks>
+        <forwards>0</forwards>
+        <uniqueforwards>0</uniqueforwards>
+        <hardbounces>0</hardbounces>
+        <softbounces>0</softbounces>
+        <unsubscribes>0</unsubscribes>
+        <unsubreasons>0</unsubreasons>
+        <updates>0</updates>
+        <socialshares>0</socialshares>
+        <status>1</status>
+        <public>1</public>
+        <mail_transfer>0</mail_transfer>
+        <mail_send>0</mail_send>
+        <mail_cleanup>0</mail_cleanup>
+        <mailer_log_file>0</mailer_log_file>
+        <tracklinks>all</tracklinks>
+        <tracklinksanalytics>0</tracklinksanalytics>
+        <trackreads>1</trackreads>
+        <trackreadsanalytics>0</trackreadsanalytics>
+        <analytics_campaign_name/>
+        <tweet>0</tweet>
+        <facebook>0</facebook>
+        <survey/>
+        <embed_images>0</embed_images>
+        <htmlunsub>0</htmlunsub>
+        <textunsub>0</textunsub>
+        <htmlunsubdata/>
+        <textunsubdata/>
+        <recurring>day1</recurring>
+        <willrecur>0</willrecur>
+        <split_type>even</split_type>
+        <split_offset>2</split_offset>
+        <split_offset_type>day</split_offset_type>
+        <split_winner_messageid>0</split_winner_messageid>
+        <split_winner_awaiting>0</split_winner_awaiting>
+        <responder_offset>0</responder_offset>
+        <responder_type>subscribe</responder_type>
+        <responder_existing>0</responder_existing>
+        <reminder_field>sdate</reminder_field>
+        <reminder_format>yyyy-mm-dd</reminder_format>
+        <reminder_type>month_day</reminder_type>
+        <reminder_offset>0</reminder_offset>
+        <reminder_offset_type>day</reminder_offset_type>
+        <reminder_offset_sign>+</reminder_offset_sign>
+        <reminder_last_cron_run/>
+        <activerss_interval>year1</activerss_interval>
+        <activerss_url/>
+        <activerss_items>10</activerss_items>
+        <ip4>1234567980</ip4>
+        <laststep>result</laststep>
+        <managetext>0</managetext>
+        <schedule>1</schedule>
+        <waitpreview>0</waitpreview>
+        <sortorder>3</sortorder>
+        <lists>2</lists>
+        <processid>0</processid>
+        <canresend>1</canresend>
+        <ago_cdate>2 days</ago_cdate>
+        <ago_mdate>1 hour</ago_mdate>
+        <ago_sdate>8 hours</ago_sdate>
+        <ago_ldate>7989 years</ago_ldate>
+        <original_amt>0</original_amt>
+        <original_ldate/>
+        <ago_original_ldate>-</ago_original_ldate>
+        <messageid>579</messageid>
+        <folders></folders>
+        <avatars></avatars>
+        <screenshot>http://www.image.url/img.png</screenshot>
+        <hasimage>1</hasimage>
+    </rows>
+    <rows>
+        <id>8</id>
+        <type>single</type>
+        <userid>10</userid>
+        <filterid>0</filterid>
+        <bounceid>-1</bounceid>
+        <realcid>0</realcid>
+        <sendid>0</sendid>
+        <threadid>0</threadid>
+        <basetemplateid>35</basetemplateid>
+        <basemessageid>0</basemessageid>
+        <source>web</source>
+        <name>Campaign Name 8</name>
+        <cdate>2014-08-11 15:00:07</cdate>
+        <mdate>2014-08-14 11:28:56</mdate>
+        <sdate>2014-08-14 18:15:00</sdate>
+        <ldate>9999-01-01 00:00:00</ldate>
+        <send_amt>0</send_amt>
+        <total_amt>0</total_amt>
+        <opens>29</opens>
+        <uniqueopens>1</uniqueopens>
+        <linkclicks>11</linkclicks>
+        <uniquelinkclicks>6</uniquelinkclicks>
+        <subscriberclicks>1</subscriberclicks>
+        <forwards>0</forwards>
+        <uniqueforwards>0</uniqueforwards>
+        <hardbounces>0</hardbounces>
+        <softbounces>0</softbounces>
+        <unsubscribes>0</unsubscribes>
+        <unsubreasons>0</unsubreasons>
+        <updates>0</updates>
+        <socialshares>0</socialshares>
+        <status>1</status>
+        <public>1</public>
+        <mail_transfer>0</mail_transfer>
+        <mail_send>0</mail_send>
+        <mail_cleanup>0</mail_cleanup>
+        <mailer_log_file>0</mailer_log_file>
+        <tracklinks>all</tracklinks>
+        <tracklinksanalytics>0</tracklinksanalytics>
+        <trackreads>1</trackreads>
+        <trackreadsanalytics>0</trackreadsanalytics>
+        <analytics_campaign_name/>
+        <tweet>0</tweet>
+        <facebook>0</facebook>
+        <survey/>
+        <embed_images>0</embed_images>
+        <htmlunsub>0</htmlunsub>
+        <textunsub>0</textunsub>
+        <htmlunsubdata/>
+        <textunsubdata/>
+        <recurring>day1</recurring>
+        <willrecur>0</willrecur>
+        <split_type>even</split_type>
+        <split_offset>2</split_offset>
+        <split_offset_type>day</split_offset_type>
+        <split_winner_messageid>0</split_winner_messageid>
+        <split_winner_awaiting>0</split_winner_awaiting>
+        <responder_offset>0</responder_offset>
+        <responder_type>subscribe</responder_type>
+        <responder_existing>0</responder_existing>
+        <reminder_field>sdate</reminder_field>
+        <reminder_format>yyyy-mm-dd</reminder_format>
+        <reminder_type>month_day</reminder_type>
+        <reminder_offset>0</reminder_offset>
+        <reminder_offset_type>day</reminder_offset_type>
+        <reminder_offset_sign>+</reminder_offset_sign>
+        <reminder_last_cron_run/>
+        <activerss_interval>year1</activerss_interval>
+        <activerss_url/>
+        <activerss_items>10</activerss_items>
+        <ip4>1234567980</ip4>
+        <laststep>result</laststep>
+        <managetext>0</managetext>
+        <schedule>1</schedule>
+        <waitpreview>0</waitpreview>
+        <sortorder>3</sortorder>
+        <lists>2</lists>
+        <processid>0</processid>
+        <canresend>1</canresend>
+        <ago_cdate>2 days</ago_cdate>
+        <ago_mdate>1 hour</ago_mdate>
+        <ago_sdate>8 hours</ago_sdate>
+        <ago_ldate>7989 years</ago_ldate>
+        <original_amt>0</original_amt>
+        <original_ldate/>
+        <ago_original_ldate>-</ago_original_ldate>
+        <messageid>575</messageid>
+        <folders></folders>
+        <avatars></avatars>
+        <screenshot>http://www.image.url/img.png</screenshot>
+        <hasimage>1</hasimage>
+    </rows>
+    <rows>
+        <id>9</id>
+        <type>single</type>
+        <userid>10</userid>
+        <filterid>0</filterid>
+        <bounceid>-1</bounceid>
+        <realcid>0</realcid>
+        <sendid>0</sendid>
+        <threadid>0</threadid>
+        <basetemplateid>37</basetemplateid>
+        <basemessageid>0</basemessageid>
+        <source>web</source>
+        <name>Campaign Name 9</name>
+        <cdate>2014-08-11 15:29:02</cdate>
+        <mdate>2014-08-14 11:18:19</mdate>
+        <sdate>2014-08-14 18:05:00</sdate>
+        <ldate>9999-01-01 00:00:00</ldate>
+        <send_amt>0</send_amt>
+        <total_amt>0</total_amt>
+        <opens>6</opens>
+        <uniqueopens>1</uniqueopens>
+        <linkclicks>4</linkclicks>
+        <uniquelinkclicks>4</uniquelinkclicks>
+        <subscriberclicks>1</subscriberclicks>
+        <forwards>0</forwards>
+        <uniqueforwards>0</uniqueforwards>
+        <hardbounces>0</hardbounces>
+        <softbounces>0</softbounces>
+        <unsubscribes>0</unsubscribes>
+        <unsubreasons>0</unsubreasons>
+        <updates>0</updates>
+        <socialshares>0</socialshares>
+        <status>1</status>
+        <public>1</public>
+        <mail_transfer>0</mail_transfer>
+        <mail_send>0</mail_send>
+        <mail_cleanup>0</mail_cleanup>
+        <mailer_log_file>0</mailer_log_file>
+        <tracklinks>all</tracklinks>
+        <tracklinksanalytics>0</tracklinksanalytics>
+        <trackreads>1</trackreads>
+        <trackreadsanalytics>0</trackreadsanalytics>
+        <analytics_campaign_name/>
+        <tweet>0</tweet>
+        <facebook>0</facebook>
+        <survey/>
+        <embed_images>0</embed_images>
+        <htmlunsub>0</htmlunsub>
+        <textunsub>0</textunsub>
+        <htmlunsubdata/>
+        <textunsubdata/>
+        <recurring>day1</recurring>
+        <willrecur>0</willrecur>
+        <split_type>even</split_type>
+        <split_offset>2</split_offset>
+        <split_offset_type>day</split_offset_type>
+        <split_winner_messageid>0</split_winner_messageid>
+        <split_winner_awaiting>0</split_winner_awaiting>
+        <responder_offset>0</responder_offset>
+        <responder_type>subscribe</responder_type>
+        <responder_existing>0</responder_existing>
+        <reminder_field>sdate</reminder_field>
+        <reminder_format>yyyy-mm-dd</reminder_format>
+        <reminder_type>month_day</reminder_type>
+        <reminder_offset>0</reminder_offset>
+        <reminder_offset_type>day</reminder_offset_type>
+        <reminder_offset_sign>+</reminder_offset_sign>
+        <reminder_last_cron_run/>
+        <activerss_interval>year1</activerss_interval>
+        <activerss_url/>
+        <activerss_items>10</activerss_items>
+        <ip4>1234567980</ip4>
+        <laststep>result</laststep>
+        <managetext>0</managetext>
+        <schedule>1</schedule>
+        <waitpreview>0</waitpreview>
+        <sortorder>3</sortorder>
+        <lists>2</lists>
+        <processid>0</processid>
+        <canresend>1</canresend>
+        <ago_cdate>2 days</ago_cdate>
+        <ago_mdate>1 hour</ago_mdate>
+        <ago_sdate>7 hours</ago_sdate>
+        <ago_ldate>7989 years</ago_ldate>
+        <original_amt>0</original_amt>
+        <original_ldate/>
+        <ago_original_ldate>-</ago_original_ldate>
+        <messageid>577</messageid>
+        <folders></folders>
+        <avatars></avatars>
+        <screenshot>http://www.image.url/img.png</screenshot>
+        <hasimage>1</hasimage>
+    </rows>
+    <rows>
+        <id>10</id>
+        <type>single</type>
+        <userid>10</userid>
+        <filterid>0</filterid>
+        <bounceid>-1</bounceid>
+        <realcid>0</realcid>
+        <sendid>0</sendid>
+        <threadid>0</threadid>
+        <basetemplateid>37</basetemplateid>
+        <basemessageid>0</basemessageid>
+        <source>web</source>
+        <name>Campaign Name 10</name>
+        <cdate>2014-08-11 16:11:30</cdate>
+        <mdate>2014-08-14 11:20:47</mdate>
+        <sdate>2014-08-14 18:00:00</sdate>
+        <ldate>9999-01-01 00:00:00</ldate>
+        <send_amt>0</send_amt>
+        <total_amt>0</total_amt>
+        <opens>9</opens>
+        <uniqueopens>1</uniqueopens>
+        <linkclicks>11</linkclicks>
+        <uniquelinkclicks>5</uniquelinkclicks>
+        <subscriberclicks>1</subscriberclicks>
+        <forwards>0</forwards>
+        <uniqueforwards>0</uniqueforwards>
+        <hardbounces>0</hardbounces>
+        <softbounces>0</softbounces>
+        <unsubscribes>0</unsubscribes>
+        <unsubreasons>0</unsubreasons>
+        <updates>0</updates>
+        <socialshares>0</socialshares>
+        <status>1</status>
+        <public>1</public>
+        <mail_transfer>0</mail_transfer>
+        <mail_send>0</mail_send>
+        <mail_cleanup>0</mail_cleanup>
+        <mailer_log_file>0</mailer_log_file>
+        <tracklinks>all</tracklinks>
+        <tracklinksanalytics>0</tracklinksanalytics>
+        <trackreads>1</trackreads>
+        <trackreadsanalytics>0</trackreadsanalytics>
+        <analytics_campaign_name/>
+        <tweet>0</tweet>
+        <facebook>0</facebook>
+        <survey/>
+        <embed_images>0</embed_images>
+        <htmlunsub>0</htmlunsub>
+        <textunsub>0</textunsub>
+        <htmlunsubdata/>
+        <textunsubdata/>
+        <recurring>day1</recurring>
+        <willrecur>0</willrecur>
+        <split_type>even</split_type>
+        <split_offset>2</split_offset>
+        <split_offset_type>day</split_offset_type>
+        <split_winner_messageid>0</split_winner_messageid>
+        <split_winner_awaiting>0</split_winner_awaiting>
+        <responder_offset>0</responder_offset>
+        <responder_type>subscribe</responder_type>
+        <responder_existing>0</responder_existing>
+        <reminder_field>sdate</reminder_field>
+        <reminder_format>yyyy-mm-dd</reminder_format>
+        <reminder_type>month_day</reminder_type>
+        <reminder_offset>0</reminder_offset>
+        <reminder_offset_type>day</reminder_offset_type>
+        <reminder_offset_sign>+</reminder_offset_sign>
+        <reminder_last_cron_run/>
+        <activerss_interval>year1</activerss_interval>
+        <activerss_url/>
+        <activerss_items>10</activerss_items>
+        <ip4>1234567980</ip4>
+        <laststep>result</laststep>
+        <managetext>0</managetext>
+        <schedule>1</schedule>
+        <waitpreview>0</waitpreview>
+        <sortorder>3</sortorder>
+        <lists>2</lists>
+        <processid>0</processid>
+        <canresend>1</canresend>
+        <ago_cdate>2 days</ago_cdate>
+        <ago_mdate>1 hour</ago_mdate>
+        <ago_sdate>7 hours</ago_sdate>
+        <ago_ldate>7989 years</ago_ldate>
+        <original_amt>0</original_amt>
+        <original_ldate/>
+        <ago_original_ldate>-</ago_original_ldate>
+        <messageid>581</messageid>
+        <folders></folders>
+        <avatars></avatars>
+        <screenshot>http://www.image.url/img.png</screenshot>
+        <hasimage>1</hasimage>
+    </rows>
+    <result_code>1</result_code>
+    <result_message>Success: Something is returned</result_message>
+    <result_output>xml</result_output>
+</campaign_select_array_paginator>
