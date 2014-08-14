@@ -1,9 +1,34 @@
 <?php
 namespace AC;
-
+use AC\Models\Campaign as CampaignM;
+use AC\Models\Interfaces\Paginator;
 
 class Campaign extends ActiveCampaign
 {
+
+    /**
+     * @param array $params
+     * @return Paginator
+     */
+    public function paginateCampaigns(Paginator $paginator)
+    {
+        $action = $this->getAction(
+            __METHOD__,
+            array(
+                'method'    => 'campaign_paginator',
+                'data'      => $paginator->toArray()
+            )
+        );
+        $response = $this->doAction(
+            $action
+        );
+        $paginator->setResponse(
+            $response
+        );
+        return $paginator;
+    }
+
+
 
     function create($params, $post_data)
     {

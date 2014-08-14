@@ -20,11 +20,14 @@ abstract class Base
         {
             foreach ($mixed as  $k => $v)
             {
-                $k = 'set'.array_map(
-                    'ucfirst',
-                    explode(
-                        '_',
-                        $k
+                $k = 'set'.implode(
+                    '',
+                    array_map(
+                        'ucfirst',
+                        explode(
+                            '_',
+                            $k
+                        )
                     )
                 );
                 if (method_exists($this, $k))
@@ -40,7 +43,7 @@ abstract class Base
      * @return array
      * @throws \RuntimeException
      */
-    final public function toArray($full = false)
+    public function toArray($full = false)
     {
         $array = array();
         foreach ($this->minArray as $property => $key)
