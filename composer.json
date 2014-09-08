@@ -1,8 +1,21 @@
 {
-    "name": "EVODelavega/activecampaign-api-php",
+    "name": "evodelavega/activecampaign-api-php",
+    "description": "An alternative, more PSR-compliant AC API wrapper",
+    "license": "MIT",
+    "keywords": ["activecampaign", "email-marketing", "newsletter", "marketing-automation", "subscribe", "forms", "emails", "automation"],
+    "authors": [
+        {
+            "name": "Elias Van Ootegem",
+            "role": "Developer"
+        }
+    ],
     "autoload": {
         "psr-0" : {
             "AC" : "src"
         }
+    },
+    "require": {
+        "php": ">=5.3.0",
+        "lib-curl": "*"
     }
 }
