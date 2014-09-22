@@ -8,16 +8,72 @@ use \stdClass,
 
 class Contact extends Base
 {
+    /**
+     * @var string
+     */
     protected $email = null;
+
+    /**
+     * @var Int
+     */
     protected $subscriberid = null;
+
+    /**
+     * @var DateTime
+     */
     protected $sdate = null;
+
+    /**
+     * @var int
+     */
     protected $status = null;
+
+    /**
+     * @var string
+     */
     protected $firstName = null;
+
+    /**
+     * @var string
+     */
     protected $lastName = null;
+
+    /**
+     * @var string
+     */
     protected $hash = null;
+
+    /**
+     * @var int
+     */
     protected $listId = null;
+
+    /**
+     * @var array
+     */
     protected $lists = array();
+
+    /**
+     * @var array
+     */
     protected $fields = array();
+
+    /**
+     * @param $id
+     * @return $this
+     */
+    public function setContactId($id)
+    {
+        return $this->setSubscriberid($id);
+    }
+
+    /**
+     * @return Int|null
+     */
+    public function getContactId()
+    {
+        return $this->getSubscriberid();
+    }
 
     /**
      * @param string $firstName
@@ -70,12 +126,19 @@ class Contact extends Base
         return $this->lastName;
     }
 
+    /**
+     * @param $id
+     * @return $this
+     */
     public function setSubscriberid($id)
     {
         $this->subscriberid = (int) $id;
         return $this;
     }
 
+    /**
+     * @return Int|null
+     */
     public function getSubscriberid()
     {
         if ($this->subscriberid === null && $this->id !== null)
@@ -83,22 +146,35 @@ class Contact extends Base
         return $this->subscriberid;
     }
 
+    /**
+     * @param $status
+     * @return $this
+     */
     public function setStatus($status)
     {
         $this->status = (int) $status;
         return $this;
     }
 
+    /**
+     * @return int
+     */
     public function getStatus()
     {
         return $this->status;
     }
 
+    /**
+     * @return array
+     */
     public function getFields()
     {
         return $this->fields;
     }
 
+    /**
+     * @return array
+     */
     public function getApiFieldArray()
     {
         $return = array();
@@ -109,6 +185,10 @@ class Contact extends Base
         return $return;
     }
 
+    /**
+     * @param null|int $list
+     * @return array
+     */
     public function getApiArray($list = null)
     {
         if ($list === null)
@@ -126,6 +206,10 @@ class Contact extends Base
         );
     }
 
+    /**
+     * @param array|stdClass|\Traversable $mixed
+     * @return $this
+     */
     public function setFields($mixed)
     {
         foreach ($mixed as $field)
@@ -135,6 +219,10 @@ class Contact extends Base
         return $this;
     }
 
+    /**
+     * @param stdClass $field
+     * @return $this
+     */
     public function addField(stdClass $field)
     {
         $this->fields[$field->id] = new Field($field);
@@ -215,6 +303,9 @@ class Contact extends Base
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getEmail()
     {
         return $this->email;

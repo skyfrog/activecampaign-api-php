@@ -36,6 +36,11 @@ class Connector
         $this->debug = $debug;
     }
 
+    /**
+     * @param string $key
+     * @param array $args
+     * @return Action
+     */
     final protected function getAction($key, array $args = array())
     {
         if (!isset($this->actions[$key]))

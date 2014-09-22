@@ -90,19 +90,74 @@ class Contact extends ActiveCampaign
         return $resp;
     }
 
+    /**
+     * View everything that relates to the contacts
+     * @param array $contacts
+     * @return mixed
+     * @throws \RuntimeException
+     */
+    public function getContactDetails(array $contacts)
+    {
+        //check argument:
+        foreach ($contacts as $key => $c)
+        {
+            if (is_array($c))
+                throw new \InvalidArgumentException(
+                    sprintf(
+                        '%s expects an array of ids, array given',
+                        __METHOD__
+                    )
+                );
+            $contacts[$key] = (string) $c;//cast to string
+        }
+        $action = $this->getAction(
+            __METHOD__,
+            array(
+                'method'    => 'contact_list',
+                'data'      => array(
+                    'ids'   => implode(',', $contacts)
+                )
+            )
+        );
+        $resp = $this->doAction(
+            $action
+        );
+        if ($resp->result_code == 0 && $resp->http_code != 200)
+        {
+            throw new \RuntimeException(
+                sprintf(
+                    '%s call failed: %s.(request url: %s)',
+                    $action->getAction(),
+                    $resp->result_message,
+                    (string) $action
+                )
+            );
+        }
+        //buffer statuses
+        if ($this->statusBuffer === true)
+        {
+            for ($i=0, $max = count($contacts);$i<$max;++$i)
+            {
+                if (property_exists($resp, $i))
+                    $this->statuses[(string) $resp->{$i}->id] = $resp->{$i}->status;
+            }
+        }
+        return $resp;
+    }
+
     public function getContactStatus($contact, $default = 0)
     {
         $contact = (string) $contact;
         if (!isset($this->statuses[$contact]))
         {
-            $this->getContacts(array($contact));
+            $this->getContacts(array($contact), true);
             if (!isset($this->statuses[$contact]))
                 return (int) $default;
         }
         return (int) $this->statuses[$contact];
     }
 
-    public function getContactStatusses(array $contacts, $default = 0)
+    public function getContactStatuses(array $contacts, $default = 0)
     {
         $return = array();
         if ($this->statusBuffer === true)
