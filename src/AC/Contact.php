@@ -1,6 +1,9 @@
 <?php
 namespace AC;
 
+use AC\Models\Filter;
+use AC\Models\Contact as ContactM;
+
 class Contact extends ActiveCampaign
 {
 
@@ -13,6 +16,58 @@ class Contact extends ActiveCampaign
             'limit'     => 50
         )
     );
+
+    /**
+     * @param Filter $filter
+     * @return mixed
+     */
+    public function getContactsByFilter(Filter $filter)
+    {
+        $action = $this->getAction(
+            __METHOD__,
+            array(
+                'method'    => 'contact_list',
+                'data'      => $filter->toArray()
+            )
+        );
+        $resp = $this->doAction($action);
+        if ($resp->result_code == 0)
+            throw new \RuntimeException(
+                sprintf(
+                    '%s call failed: %s (request url: %s)',
+                    $action->getAction(),
+                    $resp->response_message,
+                    (string) $action
+                )
+            );
+        $contacts = array();
+        for ($i=0;isset($resp->{(string) $i});++$i)
+        {
+            $contacts[] = new ContactM(
+                $resp->{(string) $i}
+            );
+        }
+        return $contacts;
+    }
+
+    /**
+     * @param Filter $filter
+     * @param bool $merge
+     * @return array|mixed
+     */
+    public function getAllContactsByFilter(Filter $filter, $merge = false)
+    {
+        $pages = array();
+        do {
+            $page = $this->getContactsByFilter($filter);
+            if ($merge === true)
+                $pages += $page;
+            else
+                $pages[$filter->getPage()] = $page;
+            $filter->setNextPage();
+        } while ($page);
+        return $pages;
+    }
 
     public function setBufferStatus($buffer = false)
     {

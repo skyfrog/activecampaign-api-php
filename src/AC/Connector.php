@@ -52,7 +52,9 @@ class Connector
         }
         else
         {
-            $this->actions[$key]->resetAction(
+            /** @var Action $action */
+            $action = $this->actions[$key];
+            $action->resetAction(
                 $args
             );
         }

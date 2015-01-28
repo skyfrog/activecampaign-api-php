@@ -16,6 +16,33 @@ class Field extends Base
     protected $type = null;
     protected $options = array();
     protected $tag = null;
+    protected $custom = false;
+
+    /**
+     * @param bool $custom
+     * @return $this
+     */
+    public function setCustom($custom)
+    {
+        $this->custom = (bool) $custom;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCustom()
+    {
+        return $this->custom;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCustom()
+    {
+        return $this->custom;
+    }
 
     /**
      * @param array $options
