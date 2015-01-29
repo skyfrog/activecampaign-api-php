@@ -254,9 +254,11 @@ class Filter extends Base
     }
 
     /**
+     * This implementation of toArray IGNORES $full
+     * @param bool $full = false
      * @return array
      */
-    public function toArray()
+    public function toArray($full = false)
     {
         $filters = $this->getFieldFilterArray();
         $array = array(
