@@ -159,7 +159,9 @@ class Field extends Base
         switch ($this->type)
         {
             case 'date':
-                $this->val = new DateTime($val);
+                if (!$val instanceof DateTime)
+                    $val = new DateTime($val);
+                $this->val = $val;
                 break;
             case 'checkbox':
                 if (is_array($val))
