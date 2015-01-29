@@ -86,7 +86,7 @@ abstract class Base
     public function __toString()
     {
         if ($this->id)
-            return (string) $id;
+            return (string) $this->id;
         return '';
     }
 } 

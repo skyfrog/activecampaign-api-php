@@ -173,11 +173,123 @@ class Contact extends Base
     }
 
     /**
+     * @param string $title
+     * @return Field|null
+     */
+    public function getFieldByTitle($title)
+    {
+        $return = null;
+        /** @var Field $field */
+        foreach ($this->fields as $field)
+        {
+            if ($field->getTitle() === $title)
+            {
+                $return = $field;
+                break;
+            }
+        }
+        return $return;
+    }
+
+    /**
+     * @param string $tag
+     * @return Field|null
+     */
+    public function getFieldByTag($tag)
+    {
+        $return = null;
+        /** @var Field $field */
+        foreach ($this->fields as $field)
+        {
+            if ($field->getTag() === $tag)
+            {
+                $return = $field;
+                break;
+            }
+        }
+        return $return;
+    }
+
+    /**
+     * @param string $property
+     * @param mixed $value
+     * @return Field|null
+     */
+    public function getFieldByProperty($property, $value)
+    {
+        $return = null;
+        $tmp = new Field();
+        $getter = 'get'.implode(
+                '',
+                array_map(
+                    'ucfirst',
+                    explode(
+                        '_',
+                        $property
+                    )
+                )
+            );
+        if (!method_exists($tmp, $getter))
+        {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    '%s does not have a %s property (%s getter not found)',
+                    get_class($tmp),
+                    $property,
+                    $getter
+                )
+            );
+        }
+        /** @var Field $field */
+        foreach ($this->fields as $field)
+        {
+            if ($field->{$getter}() === $value)
+            {
+                $return = $field;
+                break;
+            }
+        }
+        return $return;
+    }
+
+    /**
+     * @param string $property
+     * @param mixed $value
+     * @return Field|null
+     */
+    public function getFieldByGetter($getter, $value)
+    {
+        $return = null;
+        $tmp = new Field();
+        if (!method_exists($tmp, $getter))
+        {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    '%s does not have a %s method',
+                    get_class($tmp),
+                    $getter
+                )
+            );
+        }
+        /** @var Field $field */
+        foreach ($this->fields as $field)
+        {
+            if ($field->{$getter}() === $value)
+            {
+                $return = $field;
+                break;
+            }
+        }
+        return $return;
+    }
+
+    /**
      * @return array
      */
     public function getApiFieldArray()
     {
         $return = array();
+        /** @var Field $field */
         foreach ($this->fields as $field)
         {
             $return['field['.$field->getTag().',0]'] = $field->getVal();
