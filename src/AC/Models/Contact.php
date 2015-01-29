@@ -332,12 +332,25 @@ class Contact extends Base
     }
 
     /**
-     * @param stdClass $field
+     * @param stdClass|Field $field
      * @return $this
+     * @throws \InvalidArgumentException
      */
-    public function addField(stdClass $field)
+    public function addField($field)
     {
-        $this->fields[$field->id] = new Field($field);
+        if (!$field instanceof \stdClass && !$field instanceof Field)
+        {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    '%s expects argument to be instance of stdClass or Field. Saw %s instead',
+                    __METHOD__,
+                    is_object($field) ? get_class($field) : gettype($field)
+                )
+            );
+        }
+        if ($field instanceof \stdClass)
+            $field = new Field($field);
+        $this->fields[$field->getId()] = $field;
         return $this;
     }
 
