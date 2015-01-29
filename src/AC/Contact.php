@@ -18,6 +18,66 @@ class Contact extends ActiveCampaign
     );
 
     /**
+     * @param ContactM $contact
+     * @param null|int $list
+     * @return bool
+     * @throws \InvalidArgumentException
+     */
+    public function syncContact(ContactM $contact, $list = null)
+    {
+        if ($list === null && $contact->getListId() === null)
+        {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    '%s expects a listID to be set on the contact OR passed as second argument',
+                    __METHOD__
+                )
+            );
+        }
+        $action = $this->getAction(
+            __METHOD__,
+            array(
+                'method'    => 'contact_sync',
+                'data'      => $contact->getApiArray($list)
+            )
+        );
+        $resp = $this->doAction(
+            $action
+        );
+        return $resp->result_code == 1;
+    }
+
+    /**
+     * @param array $contacts
+     * @param null|int $list
+     * @param bool $strict = false
+     * @throws \RuntimeException
+     */
+    public function syncContacts(array $contacts, $list = null, $strict = false)
+    {
+        /** @var ContactM $contact */
+        foreach ($contacts as $contact)
+        {
+            if ($contact instanceof ContactM)
+            {
+                if ($contact->getListId() === null)
+                    $contact->setListId($list);//assume default is given if not set on model
+                if (!$this->syncContact($contact) && $strict === true)
+                {
+                    throw new \RuntimeException(
+                        sprintf(
+                            'Failed to sync contact %s (%s) with list %d',
+                            $contact->getContactId(),
+                            $contact->getEmail(),
+                            $contact->getListId()
+                        )
+                    );
+                }
+            }
+        }
+    }
+
+    /**
      * @param Filter $filter
      * @return mixed
      */
