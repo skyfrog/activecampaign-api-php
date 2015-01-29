@@ -258,13 +258,36 @@ class Filter extends Base
      */
     public function toArray()
     {
-        return array(
+        $filters = $this->getFieldFilterArray();
+        $array = array(
             'ids'               => $this->getList(true),
-            'filters'           => $this->getFieldFilterArray(),
             'full'              => $this->getFull(),
             'sort'              => $this->getSort(),
             'sort_direction'    => $this->getSortDirection(),
             'page'              => $this->getPage()
         );
+        foreach ($filters as $k => $val)
+        {
+            if ($k === 'fields' && $val)
+            {
+                foreach ($val as $custom => $value)
+                {
+                    $mainKey = sprintf(
+                        'filters[fields][%s]',
+                        $custom
+                    );
+                    $array[$mainKey] = $value;
+                }
+            }
+            else
+            {
+                $mainKey = sprintf(
+                    'filters[%s]',
+                    $k
+                );
+                $array[$mainKey] = $val;
+            }
+        }
+        return $array;
     }
 }

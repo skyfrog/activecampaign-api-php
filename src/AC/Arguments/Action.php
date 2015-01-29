@@ -91,6 +91,7 @@ class Action
             $tmpData = $tmpData->toArray($this->full);
         }
         $data = array();
+        /** @var array $tmpData */
         foreach ($tmpData as $key => $value)
         {
             if (!is_array($value))
