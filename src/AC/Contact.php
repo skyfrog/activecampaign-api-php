@@ -137,7 +137,17 @@ class Contact extends ActiveCampaign
         return $this;
     }
 
-    public function getContactsByEmail(array $contact, $method = null)
+    /**
+     * Get contacts by email, pass a second argument if the array consists of objects
+     * The second argument will then be used as method or property to get the email value
+     * Pass true as third argument to have the method return an array of
+     * AC\Models\Contact instances, exceptions will be thrown if no model could be constructed
+     * @param array $contact
+     * @param null|string $method = null
+     * @param bool $asModel = false
+     * @return array<\stdClass|ContactM>
+     */
+    public function getContactsByEmail(array $contact, $method = null, $asModel = false)
     {
         $return = array();
         $call = null;
@@ -154,11 +164,34 @@ class Contact extends ActiveCampaign
             {
                 if ($call !== null)
                     $c = $call ? $c->{$method}() : $c->{$method};
+                $resp = null;
                 $resp = $this->getContactByEmail($c);
-                $return[$resp->email] = $resp;
+                if ($asModel === true)
+                {
+                    $return[$resp->email] = new ContactM(
+                        $resp
+                    );
+                }
+                else
+                {
+                    $return[$resp->email] = $resp;
+                }
             }
             catch(\Exception $e)
             {
+                if ($asModel === true)
+                {
+                    throw new \RuntimeException(
+                        sprintf(
+                            '%s not found, response: "%s" (Exception: %s)',
+                            $c,
+                            $resp ? json_encode($resp) : 'None',
+                            get_class($e)
+                        ),
+                        $e->getCode(),
+                        $e
+                    );
+                }
                 if ($call !== null)
                     $return[$c] = $e;
                 else
