@@ -1,0 +1,6 @@
+composer.lock
+.idea
+*.swap
+*~
+examples.php
+vendor/*
