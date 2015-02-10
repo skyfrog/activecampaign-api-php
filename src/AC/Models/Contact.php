@@ -8,6 +8,17 @@ use \stdClass,
 
 class Contact extends Base
 {
+    const STATUS_UNCONFIRMED = 0;
+    const STATUS_ACTIVE = 1;
+    const STATUS_UNSUBSCRIBED = 2;
+    const STATUS_BOUNCED = 3;
+
+    //Quick-fix: use constant to get API array
+    //to update the contact across all lists in lists array
+    //Mainly to change a contact's status accross all lists
+    //ie bulk unsubscribes
+    const LIST_ALL = 0;
+
     /**
      * @var string
      */
@@ -54,9 +65,55 @@ class Contact extends Base
     protected $lists = array();
 
     /**
+     * @var string
+     */
+    protected $listslist = '';
+
+    /**
      * @var array
      */
     protected $fields = array();
+
+    /**
+     * Docs say lists is an array, but it's actually an object!
+     * @param \stdClass|array $lists
+     * @return $this
+     */
+    public function setLists($lists)
+    {
+        if ($lists instanceof \stdClass)
+        {
+            $lists = (array) $lists;
+        }
+        $this->lists = $lists;
+        return $this;
+    }
+
+    /**
+     * @param bool $idsOnly = true
+     * @return array
+     */
+    public function getLists($idsOnly = false)
+    {
+        if (!$this->lists && $this->listslist)
+        {
+            $ids = $this->getListslist(true);
+            $lists = array();
+            foreach ($ids as $list)
+            {
+                $lists[(int) $list] = array(
+                    'listid' => $list
+                );
+            }
+            $this->lists = $lists;
+        }
+        $lists = $this->lists;
+        if ($lists && $idsOnly === true)
+        {
+            $lists = array_keys($lists);
+        }
+        return $lists;
+    }
 
     /**
      * @param $id
@@ -298,20 +355,42 @@ class Contact extends Base
     }
 
     /**
+     * Passing AC\Models\Contact::LIST_ALL to this method will update
+     * The contact status for all lists. If the lists property was set
+     * Through listslist, or incomplete data was provided, the current status
+     * will be used (value of status property on instance)
+     *
      * @param null|int $list
      * @return array
      */
     public function getApiArray($list = null)
     {
-        if ($list === null)
-            $list = $this->getListId();
         $return = array(
             'email'             => $this->getEmail(),
             'first_name'        => $this->getFirstName(),
-            'last_name'         => $this->getLastName(),
-            'p['.$list.']'      => $list,
-            'status['.$list.']' => $this->getStatus()
         );
+        if ($list === self::LIST_ALL)
+        {
+            $status = $this->getStatus();
+            foreach ($this->getLists() as $listId => $list)
+            {
+                if (!is_array($list) && !is_object($list))
+                    $list = array('listid' => $list);
+                else
+                    $list = (array) $list;
+                if (!isset($list['status']))
+                    $list['status'] = $status;
+                $return['p['.$listId.']'] = $listId;
+                $return['status['.$listId.']'] = $list['status'];
+            }
+        }
+        else
+        {
+            if ($list === null)
+                $list = $this->getListId();
+            $return['p['.$list.']'] = $list;
+            $return['status['.$list.']'] = $this->getStatus();
+        }
         return array_merge(
             $return,
             $this->getApiFieldArray()
@@ -396,15 +475,30 @@ class Contact extends Base
         return $this->listId;
     }
 
+    /**
+     * @param string $list
+     * @return $this
+     */
     public function setListslist($list)
     {
-        $list = explode(',',$list);
-        foreach ($list as $l)
-        {
-            $l = (int) $l;
-            $this->lists[$l] = $l;
-        }
+        $this->listslist = $list;
         return $this;
+    }
+
+    /**
+     * Docs say a comma is used as delimiter, experience tells me it's actually a dash (-)
+     * To support both, any non-numeric digit can be used as delimiter
+     * @param bool $asArray = false
+     * @return string|array
+     */
+    public function getListslist($asArray = false)
+    {
+        $lists = $this->listslist;
+        if ($asArray === true && $lists)
+        {
+            $lists = preg_split('/[^\d]+/', $lists);
+        }
+        return $lists;
     }
 
     /**

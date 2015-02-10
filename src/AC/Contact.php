@@ -160,11 +160,11 @@ class Contact extends ActiveCampaign
         }
         foreach ($contact as $c)
         {
+            $resp = null;
             try
             {
                 if ($call !== null)
                     $c = $call ? $c->{$method}() : $c->{$method};
-                $resp = null;
                 $resp = $this->getContactByEmail($c);
                 if ($asModel === true)
                 {
