@@ -20,10 +20,11 @@ class Contact extends ActiveCampaign
     /**
      * @param ContactM $contact
      * @param null|int $list
+     * @param bool $forceStatus = false
      * @return bool
      * @throws \InvalidArgumentException
      */
-    public function syncContact(ContactM $contact, $list = null)
+    public function syncContact(ContactM $contact, $list = null, $forceStatus = false)
     {
         if ($list === null && $contact->getListId() === null)
         {
@@ -38,7 +39,10 @@ class Contact extends ActiveCampaign
             __METHOD__,
             array(
                 'method'    => 'contact_sync',
-                'data'      => $contact->getApiArray($list)
+                'data'      => $contact->getApiArray(
+                    $list,
+                    $forceStatus
+                )
             )
         );
         $resp = $this->doAction(
