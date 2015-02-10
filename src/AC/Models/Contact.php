@@ -359,11 +359,14 @@ class Contact extends Base
      * The contact status for all lists. If the lists property was set
      * Through listslist, or incomplete data was provided, the current status
      * will be used (value of status property on instance)
+     * When $forceStatus is true, the contact's status will be set to the status property
+     * Use with caution, the purpose for this is to unsubscribe contacts completely
      *
      * @param null|int $list
+     * @param bool $forceStatus = false
      * @return array
      */
-    public function getApiArray($list = null)
+    public function getApiArray($list = null, $forceStatus = false)
     {
         $return = array(
             'email'             => $this->getEmail(),
@@ -378,7 +381,7 @@ class Contact extends Base
                     $list = array('listid' => $list);
                 else
                     $list = (array) $list;
-                if (!isset($list['status']))
+                if ($forceStatus === true || !isset($list['status']))
                     $list['status'] = $status;
                 $return['p['.$listId.']'] = $listId;
                 $return['status['.$listId.']'] = $list['status'];
