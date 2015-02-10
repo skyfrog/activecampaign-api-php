@@ -3,3 +3,8 @@
 *~
 examples.php
 vendor/*
+composer.phar
+*~
+.buildpath
+.project
+.settings
