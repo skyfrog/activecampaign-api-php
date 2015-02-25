@@ -394,10 +394,19 @@ class Contact extends Base
             $return['p['.$list.']'] = $list;
             $return['status['.$list.']'] = $this->getStatus();
         }
-        return array_merge(
+        $return = array_merge(
             $return,
             $this->getApiFieldArray()
         );
+        array_walk_recursive(
+            $return,
+            function(&$value) {
+                if ($value instanceof \DateTime) {
+                    $value = $value->format(\DateTime::ISO8601);
+                }
+            }
+        );
+        return $return;
     }
 
     /**

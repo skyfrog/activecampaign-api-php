@@ -323,7 +323,7 @@ class Connector
             {
                 $this->dbg($todo->getData(true), 1, "pre", "Description: POST data");
             }
-            curl_setopt($request, \CURLOPT_POSTFIELDS, $data);
+            curl_setopt($request, \CURLOPT_POSTFIELDS, $this->formatDateTimeInstances($data));
             $debug_str1[] = 'curl_setopt($request, CURLOPT_POSTFIELDS, $data);';
         }
         curl_setopt($request, \CURLOPT_SSL_VERIFYPEER, false);
@@ -446,6 +446,26 @@ class Connector
             }
         }
         return $object;
+    }
+
+    /**
+     * Ensure the postfields do not contain any DateTime instances
+     * Recursively walk the array, and format the DateTime values
+     *
+     * @param array $data
+     * @return array
+     */
+    protected function formatDateTimeInstances(array $data)
+    {
+        array_walk_recursive(
+            $data,
+            function(&$value) {
+                if ($value instanceof \DateTime) {
+                    $value = $value->format(\DateTime::ISO8601);
+                }
+            }
+        );
+        return $data;
     }
 
     /**
