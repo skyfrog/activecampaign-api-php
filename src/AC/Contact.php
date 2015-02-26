@@ -2,6 +2,7 @@
 namespace AC;
 
 use AC\Models\Filter;
+use AC\Arguments\Action;
 use AC\Models\Contact as ContactM;
 
 class Contact extends ActiveCampaign
@@ -85,7 +86,7 @@ class Contact extends ActiveCampaign
      * @param Filter $filter
      * @return mixed
      */
-    public function getContactsByFilter(Filter $filter)
+    public function getContactsByFilter(Filter $filter, $verb = Action::ACTION_POST)
     {
         $action = $this->getAction(
             __METHOD__,
@@ -94,13 +95,15 @@ class Contact extends ActiveCampaign
                 'data'      => $filter->toArray()
             )
         );
-        $resp = $this->doAction($action);
+        $resp = $this->doAction(
+            $action->setVerb($verb)
+        );
         if ($resp->result_code == 0)
             throw new \RuntimeException(
                 sprintf(
                     '%s call failed: %s (request url: %s)',
                     $action->getAction(),
-                    $resp->response_message,
+                    $resp->result_message,
                     (string) $action
                 )
             );

@@ -289,6 +289,13 @@ class Connector
         {
             $this->dbg($url, 1, "pre", "Description: Request URL");
         }
+        if ($todo->getVerb() === Action::ACTION_GET && $todo->getData()) {
+            $url .= '&'.http_build_query(
+                    $this->formatDateTimeInstances(
+                        $todo->getData()
+                    )
+                );
+        }
         curl_setopt($request, \CURLOPT_URL, $url);
         curl_setopt($request, \CURLOPT_HEADER, 0);
         curl_setopt($request, \CURLOPT_RETURNTRANSFER, true);
@@ -323,7 +330,13 @@ class Connector
             {
                 $this->dbg($todo->getData(true), 1, "pre", "Description: POST data");
             }
-            curl_setopt($request, \CURLOPT_POSTFIELDS, $this->formatDateTimeInstances($data));
+            curl_setopt(
+                $request,
+                \CURLOPT_POSTFIELDS,
+                http_build_query(
+                    $this->formatDateTimeInstances($data)
+                )
+            );
             $debug_str1[] = 'curl_setopt($request, CURLOPT_POSTFIELDS, $data);';
         }
         curl_setopt($request, \CURLOPT_SSL_VERIFYPEER, false);
