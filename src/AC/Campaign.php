@@ -134,13 +134,17 @@ class Campaign extends ActiveCampaign
      */
     public function getOpenList(CampaignM $campaign)
     {
+        $data = array(
+            'campaignid'    => $campaign->getId(),
+        );
+        if ($campaign->getMessageid()) {
+            $data['messageid'] = $campaign->getMessageid();
+        }
         $action = $this->getAction(
             __METHOD__,
             array(
                 'method'    => 'campaign_report_unopen_list',
-                'data'      => array(
-                    'campaignid'    => $campaign->getId(),
-                )
+                'data'      => $data
             )
         );
         $opens = $this->doAction(
