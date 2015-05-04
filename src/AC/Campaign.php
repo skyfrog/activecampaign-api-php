@@ -128,6 +128,60 @@ class Campaign extends ActiveCampaign
         return $campaign->loadBulk($totals);
     }
 
+    /**
+     * @param CampaignM $campaign
+     * @return array
+     */
+    public function getOpenList(CampaignM $campaign)
+    {
+        $action = $this->getAction(
+            __METHOD__,
+            array(
+                'method'    => 'campaign_report_unopen_list',
+                'data'      => array(
+                    'campaignid'    => $campaign->getId(),
+                )
+            )
+        );
+        $opens = $this->doAction(
+            $action
+        );
+        if (!isset($opens->result_code) || $opens->result_code == '0')
+            throw new \RuntimeException(
+                sprintf(
+                    'Failed to get unopen list: (HTTP: %d) %s',
+                    isset($opens->http_code) ? $opens->http_code : 0,
+                    isset($opens->result_message) ? $opens->result_message : 'Unknown'
+                )
+            );
+        $contacts = array();
+        if ($campaign->getUniqueopens())
+        {//if we know how many opens there are ->
+            $j = $campaign->getUniqueopens();
+            for ($i=0;$i<$j;++$i)
+            {
+                if (isset($opens->{$i}))
+                {
+                    $contacts[] = new Contact(
+                        $opens->{$i}
+                    );
+                }
+            }
+        }
+        else
+        {//just keep incrementing $i until $opens->{$i} is not set
+            $i = 0;
+            while (isset($opens->{$i}))
+            {
+                $contacts[] = new Contact(
+                    $opens->{$i}
+                );
+                ++$i;
+            }
+        }
+        return $contacts;
+    }
+
     function create($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=campaign_create&api_output={$this->output}";
