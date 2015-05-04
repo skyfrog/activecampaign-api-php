@@ -36,29 +36,6 @@ class CList extends Base
         'carbonCopy'            => 'carboncopy'
     );
 
-    public function __construct(array $data = null)
-    {
-        if (!$data)
-            return $this;
-        foreach ($data as $k => $v)
-        {
-            $k = 'set'.implode(
-                '',
-                array_map(
-                    'ucfirst',
-                    explode(
-                        '_',
-                        $k
-                    )
-                )
-            );
-            if (method_exists($this, $k))
-            {
-                $this->{$k}($v);
-            }
-        }
-    }
-
     /**
      * @param string $carbonCopy
      */

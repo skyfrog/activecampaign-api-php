@@ -98,6 +98,36 @@ class Campaign extends ActiveCampaign
         return $contacts;
     }
 
+    /**
+     * @param CampaignM $campaign
+     * @return $this
+     * @throws \RuntimeException
+     */
+    public function getCampaignTotals(CampaignM $campaign)
+    {
+        $action = $this->getAction(
+            __METHOD__,
+            array(
+                'method'    => 'campaign_report_unopen_list',
+                'data'      => array(
+                    'campaignid'    => $campaign->getId(),
+                )
+            )
+        );
+        $totals = $this->doAction(
+            $action
+        );
+        if (!isset($totals->result_code) || $totals->result_code == '0')
+            throw new \RuntimeException(
+                sprintf(
+                    'Failed to get unopen list: (HTTP: %d) %s',
+                    isset($totals->http_code) ? $totals->http_code : 0,
+                    isset($totals->result_message) ? $totals->result_message : 'Unknown'
+                )
+            );
+        return $campaign->loadBulk($totals);
+    }
+
     function create($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=campaign_create&api_output={$this->output}";

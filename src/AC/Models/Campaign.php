@@ -115,6 +115,11 @@ class Campaign extends Base
     protected $mdate = null;
 
     /**
+     * @var null|int
+     */
+    protected $status = null;
+
+    /**
      * @var array
      */
     private static $ValidTypes = array(
@@ -127,6 +132,24 @@ class Campaign extends Base
         self::TYPE_SPLIT,
         self::TYPE_TEXT
     );
+
+    /**
+     * @param int $status
+     * @return $this
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
 
     /**
      * @param int $mid

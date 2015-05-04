@@ -1,41 +1,31 @@
 <?php
 namespace AC\Models;
 
-use \stdClass;
-
 abstract class Base
 {
+    /**
+     * @var int
+     */
     protected $id = null;
 
+    /**
+     * @var array
+     */
     protected $minArray = array();
+
+    /**
+     * @var array
+     */
     protected $fullArray = array();
 
+    /**
+     * @param null|array|\Traversable|\stdClass $mixed
+     * @throws \InvalidArgumentException
+     */
     public function __construct($mixed = null)
     {
-        if (!$mixed)
-            return $this;
-        if ($mixed instanceof stdClass)
-            $mixed = (array) $mixed;
-        if (is_array($mixed) || $mixed instanceof \Traversable)
-        {
-            foreach ($mixed as  $k => $v)
-            {
-                $k = 'set'.implode(
-                    '',
-                    array_map(
-                        'ucfirst',
-                        explode(
-                            '_',
-                            $k
-                        )
-                    )
-                );
-                if (method_exists($this, $k))
-                {
-                    $this->{$k}($v);
-                }
-            }
-        }
+        if ($mixed)
+            $this->loadBulk($mixed);
     }
 
     /**
@@ -72,17 +62,66 @@ abstract class Base
         return $array;
     }
 
+    /**
+     * @param array|\Traversable|\stdClass $mixed
+     * @return $this
+     * @throws \InvalidArgumentException
+     */
+    public function loadBulk($mixed)
+    {
+        if (!is_array($mixed) && !is_object($mixed)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    '%s::%s requires an object or array to set bulk',
+                    get_class($this),
+                    __FUNCTION__
+                )
+            );
+        }
+        if (is_object($mixed) && !$mixed instanceof \Traversable && !$mixed instanceof \stdClass) {
+            throw new \InvalidArgumentException(
+                'Bulk object should be Traversable or instance of stdClass'
+            );
+        }
+        foreach ($mixed as $k => $v) {
+            $setter = 'set' . implode(
+                    '',
+                    array_map(
+                        'ucfirst',
+                        explode(
+                            '_',
+                            $k
+                        )
+                    )
+                );
+            if (method_exists($this, $setter)) {
+                $this->{$setter}($v);
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * @param int $id
+     * @return $this
+     */
     public function setId($id)
     {
         $this->id = (int) $id;
         return $this;
     }
 
+    /**
+     * @return int
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         if ($this->id)
