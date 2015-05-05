@@ -15,6 +15,11 @@ class Campaign extends Base
     const TYPE_TEXT = 'text';
 
     /**
+     * @var null|DateTime
+     */
+    protected $ldate = null;
+
+    /**
      * @var string
      */
     protected $type = null;
@@ -137,6 +142,34 @@ class Campaign extends Base
         self::TYPE_SPLIT,
         self::TYPE_TEXT
     );
+
+    /**
+     * @param null|string|DateTime $ldate
+     * @return $this
+     */
+    public function setLdate($ldate)
+    {
+        if ($ldate)
+        {
+            $ldate = $ldate instanceof DateTime ? $ldate : new DateTime($ldate);
+        }
+        $this->ldate = $ldate;
+        return $this;
+    }
+
+    /**
+     * @param bool $asString = true
+     * @return DateTime|null|string
+     */
+    public function getLdate($asString = true)
+    {
+        $rval = $this->ldate;
+        if ($rval instanceof DateTime && $asString)
+        {
+            $rval = $rval->format('Y-m-d H:i:s');
+        }
+        return $rval;
+    }
 
     /**
      * @param int $status
