@@ -35,6 +35,11 @@ class Contact extends Base
     protected $sdate = null;
 
     /**
+     * @var DateTime|null
+     */
+    protected $tstamp = null;
+
+    /**
      * @var int
      */
     protected $status = null;
@@ -466,6 +471,34 @@ class Contact extends Base
         if ($asString === true)
             return $this->sdate->format('Y-m-d H:i:s');
         return $this->sdate;
+    }
+
+    /**
+     * @param null|DateTime|string $tstamp
+     * @return $this
+     */
+    public function setTstamp($tstamp = null)
+    {
+        if ($tstamp)
+        {
+            $tstamp = $tstamp instanceof DateTime ? $tstamp : new DateTime($tstamp);
+        }
+        $this->tstamp = $tstamp;
+        return $this;
+    }
+
+    /**
+     * @param bool $asString = true
+     * @return null|DateTime|string
+     */
+    public function getTstamp($asString = true)
+    {
+        $rval = $this->tstamp;
+        if ($rval instanceof DateTime && $asString)
+        {
+            $rval = $rval->format('Y-m-d H:i:s');
+        }
+        return $rval;
     }
 
     /**

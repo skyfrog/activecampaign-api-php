@@ -105,7 +105,7 @@ class Campaign extends ActiveCampaign
 
     /**
      * @param CampaignM $campaign
-     * @return $this
+     * @return CampaignM
      * @throws \RuntimeException
      */
     public function getCampaignTotals(CampaignM $campaign)
