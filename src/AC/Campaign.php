@@ -62,8 +62,11 @@ class Campaign extends ActiveCampaign
     {
         $data = array(
             'campaignid'    => $campaign->getId(),
-            'messageid'     => $campaign->getMessageid()
         );
+        if ($campaign->getMessageid())
+        {
+            $data['messageid'] = $campaign->getMessageid();
+        }
         $action = $this->getAction(
             __METHOD__,
             array(
@@ -125,7 +128,7 @@ class Campaign extends ActiveCampaign
         if (!isset($totals->result_code) || $totals->result_code == '0')
             throw new \RuntimeException(
                 sprintf(
-                    'Failed to get unopen list: (HTTP: %d) %s',
+                    'Failed to get campaign totals: (HTTP: %d) %s',
                     isset($totals->http_code) ? $totals->http_code : 0,
                     isset($totals->result_message) ? $totals->result_message : 'Unknown'
                 )
@@ -158,7 +161,7 @@ class Campaign extends ActiveCampaign
         if (!isset($opens->result_code) || $opens->result_code == '0')
             throw new \RuntimeException(
                 sprintf(
-                    'Failed to get unopen list: (HTTP: %d) %s',
+                    'Failed to get open list: (HTTP: %d) %s',
                     isset($opens->http_code) ? $opens->http_code : 0,
                     isset($opens->result_message) ? $opens->result_message : 'Unknown'
                 )
@@ -194,6 +197,65 @@ class Campaign extends ActiveCampaign
     /**
      * @param CampaignM $campaign
      * @return array
+     */
+    public function getBounceList(CampaignM $campaign)
+    {
+        $data = array(
+            'campaignid'    => $campaign->getId(),
+        );
+        if ($campaign->getMessageid())
+        {
+            $data['messageid'] = $campaign->getMessageid();
+        }
+        $action = $this->getAction(
+            __METHOD__,
+            array(
+                'method'    => 'campaign_report_bounce_list',
+                'data'      => $data
+            )
+        );
+        $bounces = $this->doAction(
+            $action
+        );
+        if (!isset($bounces->result_code) || $bounces->result_code == '0')
+            throw new \RuntimeException(
+                sprintf(
+                    'Failed to get bounce list: (HTTP: %d) %s',
+                    isset($bounces->http_code) ? $bounces->http_code : 0,
+                    isset($bounces->result_message) ? $bounces->result_message : 'Unknown'
+                )
+            );
+        $contacts = array();
+        if ($campaign->getTotalbounces())
+        {//if we know how many opens there are ->
+            $j = $campaign->getTotalbounces();
+            for ($i=0;$i<$j;++$i)
+            {
+                if (isset($bounces->{$i}))
+                {
+                    $contacts[] = new Contact(
+                        $bounces->{$i}
+                    );
+                }
+            }
+        }
+        else
+        {//just keep incrementing $i until $opens->{$i} is not set
+            $i = 0;
+            while (isset($bounces->{$i}))
+            {
+                $contacts[] = new Contact(
+                    $bounces->{$i}
+                );
+                ++$i;
+            }
+        }
+        return $contacts;
+    }
+
+    /**
+     * @param CampaignM $campaign
+     * @return array
      * @throws \RuntimeException
      */
     public function getUnsubscribeList(CampaignM $campaign)
@@ -201,7 +263,8 @@ class Campaign extends ActiveCampaign
         $data = array(
             'campaignid'    => $campaign->getId(),
         );
-        if ($campaign->getMessageid()) {
+        if ($campaign->getMessageid())
+        {
             $data['messageid'] = $campaign->getMessageid();
         }
         $action = $this->getAction(
@@ -217,7 +280,7 @@ class Campaign extends ActiveCampaign
         if (!isset($opens->result_code) || $opens->result_code == '0')
             throw new \RuntimeException(
                 sprintf(
-                    'Failed to get unopen list: (HTTP: %d) %s',
+                    'Failed to get unsubscribe list: (HTTP: %d) %s',
                     isset($opens->http_code) ? $opens->http_code : 0,
                     isset($opens->result_message) ? $opens->result_message : 'Unknown'
                 )

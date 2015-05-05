@@ -67,6 +67,11 @@ class Campaign extends Base
     /**
      * @var int
      */
+    protected $totalbounces = null;
+
+    /**
+     * @var int
+     */
     protected $hardbounces = null;
 
     /**
@@ -203,6 +208,16 @@ class Campaign extends Base
     public function getBasetemplateid()
     {
         return $this->basetemplateid;
+    }
+
+    /**
+     * @param int $tb
+     * @return $this
+     */
+    public function setTotalbounces($tb)
+    {
+        $this->totalbounces = $tb;
+        return $this;
     }
 
     /**
@@ -414,7 +429,7 @@ class Campaign extends Base
         if ($this->successfulSent === null)
         {
             $this->setSuccessfulSent(
-                $this->sendAmt - $this->getTotalBounces()
+                $this->sendAmt - $this->getTotalbounces()
             );
         }
         return $this->successfulSent;
@@ -423,9 +438,11 @@ class Campaign extends Base
     /**
      * @return int
      */
-    public function getTotalBounces()
+    public function getTotalbounces()
     {
-        return $this->hardbounces + $this->softbounces;
+        if ($this->totalbounces === null)
+            return $this->hardbounces + $this->softbounces;
+        return $this->totalbounces;
     }
 
     /**
@@ -497,7 +514,7 @@ class Campaign extends Base
     public function setUnreadCount($unreadCount)
     {
         $v = (int) $unreadCount;
-        $comp = $this->sendAmt - $this->getTotalBounces();
+        $comp = $this->sendAmt - $this->getTotalbounces();
         $comp -= $this->getUniqueopens();
         if ($comp <= 0)
             $comp = $v;
@@ -507,7 +524,7 @@ class Campaign extends Base
                     'Unread count cannot be higher than sent count minus bounces, minus opens (%d > %d - (%d + %d)',
                     $v,
                     $this->getSendAmt(),
-                    $this->getTotalBounces(),
+                    $this->getTotalbounces(),
                     $this->getUniqueopens()
                 )
             );
@@ -526,7 +543,7 @@ class Campaign extends Base
             if ($total)
                 $this->setUnreadCount(
                     $total - (
-                        $this->getTotalBounces() + $this->getUniqueopens()
+                        $this->getTotalbounces() + $this->getUniqueopens()
                     )
                 );
             else
