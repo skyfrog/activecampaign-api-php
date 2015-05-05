@@ -60,8 +60,6 @@ class Campaign extends ActiveCampaign
      */
     public function getUnopenList(CampaignM $campaign)
     {
-        if (!$campaign->getUnreadCount())
-            return array();
         $data = array(
             'campaignid'    => $campaign->getId(),
             'messageid'     => $campaign->getMessageid()
@@ -85,17 +83,23 @@ class Campaign extends ActiveCampaign
                 )
             );
         $contacts = array();
-        for($i=0, $total = $campaign->getUnreadCount();$i<$total;++$i)
+        if ($campaign->getUnreadCount())
         {
-            if (isset($list->{$i}))
+            for ($i = 0, $total = $campaign->getUnreadCount(); $i < $total; ++$i)
+            {
+                if (isset($list->{$i}))
+                    $contacts[] = new Contact(
+                        $list->{$i}
+                    );
+            }
+        }
+        else
+        {
+            while (isset($list->{$i}))//make sure we have all contacts
                 $contacts[] = new Contact(
-                    $list->{$i}
+                    $list->{$i++}
                 );
         }
-        while(isset($list->{$i}))//make sure we have all contacts
-            $contacts[] = new Contact(
-                $list->{$i++}
-            );
         return $contacts;
     }
 
@@ -219,9 +223,9 @@ class Campaign extends ActiveCampaign
                 )
             );
         $contacts = array();
-        if ($campaign->getUniqueopens())
+        if ($campaign->getUnsubscribes())
         {//if we know how many opens there are ->
-            $j = $campaign->getUniqueopens();
+            $j = $campaign->getUnsubscribes();
             for ($i=0;$i<$j;++$i)
             {
                 if (isset($opens->{$i}))
