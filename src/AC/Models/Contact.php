@@ -88,7 +88,14 @@ class Contact extends Base
     {
         if ($lists instanceof \stdClass)
         {
-            $lists = (array) $lists;
+            //fix for object to array cast
+            //https://bugs.php.net/bug.php?id=45959
+            $arg = $lists;
+            $lists = array();
+            foreach ($arg as $k => $v)
+            {
+                $lists[$k] = $v;
+            }
         }
         $this->lists = $lists;
         return $this;
