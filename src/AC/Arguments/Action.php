@@ -178,12 +178,12 @@ class Action
                 }
                 else
                 {
-                    $str .= $val{0} == '&' ? $val : ('&'.$val);
+                    $str .= $val[0] == '&' ? $val : ('&'.$val);
                 }
             }
             $mixed = $str;
         }
-        if ($mixed{0} !== '&')
+        if ($mixed[0] !== '&')
         {
             $mixed = '&'.$mixed;
         }

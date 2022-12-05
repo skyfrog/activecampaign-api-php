@@ -553,7 +553,7 @@ class Connector
         {
             if ($child->childNodes->length > 1)
                 $result->{$child->nodeName} = $this->parseXMLDom($child);
-            elseif ($child->nodeName{0} !== '#')
+            elseif ($child->nodeName[0] !== '#')
                 $result->{$child->nodeName} = trim($child->textContent);
         }
         return $result;
