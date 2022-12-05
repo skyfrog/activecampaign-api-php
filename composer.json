@@ -1,5 +1,5 @@
 {
-    "name": "evodelavega/activecampaign-api-php",
+    "name": "skyfrog/activecampaign-api-php",
     "description": "An alternative, more PSR-compliant AC API wrapper",
     "license": "MIT",
     "keywords": ["activecampaign", "email-marketing", "newsletter", "marketing-automation", "subscribe", "forms", "emails", "automation"],
